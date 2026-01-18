@@ -31,37 +31,25 @@
 
     .card {
       background: rgba(255, 255, 255, 0.95);
+      width: 90%;
       max-width: 520px;
-      padding: 30px 25px;
+      max-height: 85vh;          /* 🔑 evita que se salga */
+      padding: 25px 20px;
       border-radius: 20px;
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
       text-align: center;
       z-index: 2;
+      overflow-y: auto;          /* 🔑 scroll interno */
     }
 
     h1 {
       color: #f8b500;
-      margin-bottom: 10px;
+      margin: 10px 0;
       font-size: 1.9rem;
-    }
-
-    .michi {
-      width: 160px;
-      max-width: 60%;
-      margin: 15px auto;
-      display: block;
-    }
-
-    #texto {
-      color: #444;
-      line-height: 1.7;
-      font-size: 1rem;
-      min-height: 160px;
     }
 
     .corazon {
       font-size: 1.8rem;
-      margin-bottom: 10px;
       animation: latir 1.5s infinite;
     }
 
@@ -69,6 +57,20 @@
       0% { transform: scale(1); }
       50% { transform: scale(1.15); }
       100% { transform: scale(1); }
+    }
+
+    .michi {
+      width: 150px;
+      max-width: 60%;
+      margin: 15px auto;
+      display: block;
+    }
+
+    #texto {
+      color: #444;
+      line-height: 1.6;
+      font-size: 1rem;
+      margin-top: 10px;
     }
 
     button {
@@ -129,7 +131,8 @@ const mensaje = [
   "mereces cosas muy bonitas.",
   "",
   "Poder estar contigo me hizo sentir amado",
-  "en un mundo donde me he sentido tan solo..."
+  "en un mundo donde me he sentido tan solo...",
+  "TE AMO 💖."
 ];
 
 let linea = 0;
@@ -163,7 +166,7 @@ function escribir() {
       document.getElementById("texto").innerHTML += "<br>";
       linea++;
       letra = 0;
-      setTimeout(escribir, 400);
+      setTimeout(escribir, 350);
     }
   } else {
     document.getElementById("firma").style.opacity = 1;
@@ -179,7 +182,7 @@ setInterval(() => {
   estrella.style.fontSize = (Math.random() * 10 + 10) + "px";
   document.body.appendChild(estrella);
   setTimeout(() => estrella.remove(), 6000);
-}, 500);
+}, 600);
 </script>
 
 </body>
