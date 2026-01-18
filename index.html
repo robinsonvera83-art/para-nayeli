@@ -1,151 +1,117 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Para Nayeli 💛</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Para Nayeli 💛</title>
 
-<style>
-body {
-  margin: 0;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, #fceabb, #f8b500);
-  font-family: 'Segoe UI', sans-serif;
-  overflow: hidden;
-}
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #fceabb, #f8b500);
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
+    }
 
-.estrella {
-  position: absolute;
-  color: white;
-  opacity: 0.8;
-  animation: caer 6s linear infinite;
-}
+    .estrella {
+      position: absolute;
+      color: white;
+      opacity: 0.8;
+      animation: caer 6s linear infinite;
+    }
 
-@keyframes caer {
-  from { transform: translateY(-10vh); }
-  to { transform: translateY(110vh); opacity: 0; }
-}
+    @keyframes caer {
+      from { transform: translateY(-10vh); }
+      to { transform: translateY(110vh); opacity: 0; }
+    }
 
-.card {
-  background: rgba(255,255,255,0.95);
-  max-width: 520px;
-  padding: 30px 25px;
-  border-radius: 20px;
-  box-shadow: 0 20px 40px rgba(0,0,0,.15);
-  text-align: center;
-  z-index: 2;
-}
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      max-width: 520px;
+      padding: 30px 25px;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0,0,0,.15);
+      text-align: center;
+      z-index: 2;
+    }
 
-h1 {
-  color: #f8b500;
-  margin-bottom: 15px;
-}
+    h1 {
+      color: #f8b500;
+      margin-bottom: 15px;
+    }
 
-#texto {
-  color: #444;
-  line-height: 1.7;
-  min-height: 140px;
-}
+    #texto {
+      color: #444;
+      line-height: 1.7;
+      min-height: 140px;
+    }
 
-.corazon {
-  font-size: 1.8rem;
-  margin-bottom: 10px;
-  animation: latir 1.5s infinite;
-}
+    .corazon {
+      font-size: 1.8rem;
+      animation: latir 1.5s infinite;
+      display: inline-block;
+      margin-top: 10px;
+    }
 
-@keyframes latir {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.15); }
-  100% { transform: scale(1); }
-}
+    @keyframes latir {
+      0%,100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
 
-button {
-  margin-top: 15px;
-  padding: 12px 22px;
-  border: none;
-  border-radius: 25px;
-  background: #f8b500;
-  color: white;
-  font-size: 1rem;
-  cursor: pointer;
-}
+    button {
+      margin-top: 20px;
+      padding: 12px 25px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 30px;
+      background: #f8b500;
+      color: white;
+      cursor: pointer;
+    }
 
-button:disabled {
-  opacity: 0.8;
-}
-
-.firma {
-  margin-top: 25px;
-  font-weight: bold;
-  color: #f8b500;
-  opacity: 0;
-  transition: opacity 1s;
-}
-</style>
+    audio {
+      margin-top: 15px;
+      width: 100%;
+    }
+  </style>
 </head>
 
 <body>
 
-<!-- 🎵 AQUÍ TÚ PONES LA MÚSICA DESPUÉS -->
-<audio id="musica" loop>
-  <!-- ejemplo:
-  <source src="mi_corazon_encantado.mp3" type="audio/mpeg">
-  -->
-</audio>
+  <div class="card">
+    <h1>Para ti 💛</h1>
 
-<div class="card">
-  <div class="corazon">💛</div>
-  <h1>Para Nayeli</h1>
+    <div id="texto">
+      <p>
+        Solo quiero que sepas que eres lo suficientemente buena para estar conmigo.
+        Eres lo más valioso que tengo, eres una chica linda tal como eres y no
+        necesitas cambiar nada. Eres perfecta para mí, mereces cosas muy bonitas.
+        Poder estar contigo me hizo sentir amado en un mundo donde me he sentido tan solo...
+      </p>
+      <div class="corazon">💛</div>
+    </div>
 
-  <div id="texto"></div>
-
-  <button id="btn" onclick="iniciar()">▶ Leer mensaje</button>
-
-  <div class="firma" id="firma">
-    Con cariño,<br>
-    tu niño Robin 💛
+    <audio controls>
+      <source src="mi_corazon_encantado.mp3" type="audio/mpeg">
+      Tu navegador no soporta audio.
+    </audio>
   </div>
-</div>
 
-<script>
-const mensaje = "Solo quiero que sepas que eres lo suficientemente buena para estar conmigo. Eres lo más valioso que tengo, eres una chica linda tal como eres y no necesitas cambiar nada. Eres perfecta para mí y mereces cosas muy bonitas.. Poder estar contigo me hizo sentir amado en un mundo donde me he sentido tan solo...";
-let i = 0;
-
-function iniciar() {
-  document.getElementById("btn").disabled = true;
-
-  const audio = document.getElementById("musica");
-  if (audio.children.length > 0) {
-    audio.volume = 0.8;
-    audio.play();
-  }
-
-  escribir();
-}
-
-function escribir() {
-  if (i < mensaje.length) {
-    document.getElementById("texto").innerHTML += mensaje.charAt(i);
-    i++;
-    setTimeout(escribir, 40);
-  } else {
-    document.getElementById("firma").style.opacity = 1;
-  }
-}
-
-setInterval(() => {
-  const estrella = document.createElement("div");
-  estrella.className = "estrella";
-  estrella.innerHTML = "✨";
-  estrella.style.left = Math.random() * 100 + "vw";
-  estrella.style.fontSize = (Math.random() * 10 + 10) + "px";
-  document.body.appendChild(estrella);
-  setTimeout(() => estrella.remove(), 6000);
-}, 400);
-</script>
+  <script>
+    for (let i = 0; i < 25; i++) {
+      const estrella = document.createElement('div');
+      estrella.className = 'estrella';
+      estrella.innerHTML = '✨';
+      estrella.style.left = Math.random() * 100 + 'vw';
+      estrella.style.animationDuration = (Math.random() * 3 + 3) + 's';
+      estrella.style.fontSize = (Math.random() * 20 + 10) + 'px';
+      document.body.appendChild(estrella);
+    }
+  </script>
 
 </body>
 </html>
