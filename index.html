@@ -6,101 +6,87 @@
 <title>Para Nayeli 💛</title>
 
 <style>
-body {
-  margin: 0;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(135deg, #ffe29f, #fbc531);
-  font-family: Arial, sans-serif;
+body{
+  margin:0;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(135deg,#ffe29f,#fbc531);
+  font-family:Arial,sans-serif;
 }
 
-.card {
-  background: #fffdf5;
-  width: 90%;
-  max-width: 400px;
-  padding: 25px;
-  border-radius: 25px;
-  text-align: center;
-  box-shadow: 0 20px 40px rgba(0,0,0,.2);
+.card{
+  background:#fffdf5;
+  width:90%;
+  max-width:400px;
+  padding:25px;
+  border-radius:25px;
+  text-align:center;
+  box-shadow:0 20px 40px rgba(0,0,0,.2);
 }
 
-.michi {
-  width: 180px;
-  margin: 10px auto 15px;
-  display: block;
-  animation: flotar 3s ease-in-out infinite;
+.michi{
+  width:180px;
+  margin:10px auto 15px;
+  display:block;
+  animation:flotar 3s ease-in-out infinite;
 }
 
-@keyframes flotar {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-12px); }
-  100% { transform: translateY(0); }
+@keyframes flotar{
+  0%{transform:translateY(0)}
+  50%{transform:translateY(-12px)}
+  100%{transform:translateY(0)}
 }
 
-h1 {
-  color: #f5a623;
-  margin-bottom: 10px;
+h1{color:#f5a623}
+
+#texto p{
+  opacity:0;
+  transform:translateY(10px);
+  transition:.6s;
 }
 
-#texto p {
-  color: #444;
-  line-height: 1.6;
-  opacity: 0;
-  transform: translateY(10px);
-  transition: all 0.6s ease;
-}
-
-button {
-  margin-top: 20px;
-  padding: 12px 25px;
-  font-size: 16px;
-  border: none;
-  border-radius: 25px;
-  background: #f5a623;
-  color: white;
-  cursor: pointer;
+button{
+  margin-top:20px;
+  padding:12px 25px;
+  border:none;
+  border-radius:25px;
+  background:#f5a623;
+  color:white;
+  font-size:16px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- 🎵 MÚSICA -->
 <audio id="musica" src="mi_corazon_encantado.mp3"></audio>
 
 <div class="card">
-
-  <!-- 🐱 MICHI -->
-  <img src="michi.png" alt="Michi con flores" class="michi">
+  <img src="michi.png" class="michi">
 
   <h1>Para Nayeli 💛</h1>
 
   <div id="texto">
     <p>Solo quiero que sepas que eres lo suficientemente buena para estar conmigo.</p>
-    <p>Eres lo más valioso que tengo, eres una chica linda tal como eres y no necesitas cambiar nada.</p>
-    <p>Eres perfecta para mí, mereces cosas muy bonitas.</p>
-    <p>Poder estar contigo me hizo sentir amado en un mundo donde me he sentido tan solo.</p>
+    <p>Eres lo más valioso que tengo, eres una chica linda tal como eres.</p>
+    <p>No necesitas cambiar nada.</p>
+    <p>Poder estar contigo me hizo sentir amado.</p>
     <p><strong>Te quiero 💛</strong></p>
   </div>
 
   <button onclick="leer()">▶ Leer mensaje</button>
-
 </div>
 
 <script>
-function leer() {
-  // reproducir música
+function leer(){
   document.getElementById("musica").play();
-
-  // animar texto línea por línea
-  const lineas = document.querySelectorAll("#texto p");
-  lineas.forEach((p, i) => {
-    setTimeout(() => {
-      p.style.opacity = 1;
-      p.style.transform = "translateY(0)";
-    }, i * 800);
+  document.querySelectorAll("#texto p").forEach((p,i)=>{
+    setTimeout(()=>{
+      p.style.opacity=1;
+      p.style.transform="translateY(0)";
+    },i*800);
   });
 }
 </script>
