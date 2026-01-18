@@ -1,117 +1,127 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Para Nayeli 💛</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para Nayeli 💛</title>
 
-  <style>
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: linear-gradient(135deg, #fceabb, #f8b500);
-      font-family: 'Segoe UI', sans-serif;
-    }
+<style>
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #fceabb, #f8b500);
+  font-family: 'Segoe UI', sans-serif;
+}
 
-    .card {
-      background: rgba(255, 255, 255, 0.96);
-      max-width: 520px;
-      padding: 30px 25px;
-      border-radius: 22px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-      text-align: center;
-    }
+/* Tarjeta SIN fondo sólido */
+.card {
+  max-width: 520px;
+  padding: 30px 25px;
+  text-align: center;
+}
 
-    .michi {
-      width: 230px;
-      max-width: 80%;
-      display: block;
-      margin: 0 auto 20px auto;
-    }
+/* Animación del michi */
+.michi {
+  width: 220px;
+  max-width: 80%;
+  margin: 0 auto 20px;
+  animation: flotar 3s ease-in-out infinite;
+}
 
-    h1 {
-      color: #f8b500;
-      margin-bottom: 15px;
-    }
+@keyframes flotar {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
+}
 
-    #texto {
-      color: #444;
-      line-height: 1.7;
-      font-size: 1rem;
-      min-height: 120px;
-      white-space: pre-line;
-    }
+h1 {
+  color: #f8b500;
+  margin-bottom: 15px;
+}
 
-    button {
-      margin-top: 20px;
-      background: #f8b500;
-      color: white;
-      border: none;
-      padding: 12px 22px;
-      border-radius: 30px;
-      font-size: 1rem;
-      cursor: pointer;
-    }
+#texto {
+  color: #444;
+  line-height: 1.7;
+  font-size: 1rem;
+  min-height: 150px;
+  white-space: pre-line;
+  opacity: 0.95;
+}
 
-    button:hover {
-      background: #e0a800;
-    }
+/* Botón */
+button {
+  margin-top: 20px;
+  background: #f8b500;
+  color: white;
+  border: none;
+  padding: 14px 26px;
+  border-radius: 30px;
+  font-size: 1rem;
+  cursor: pointer;
+}
 
-    audio {
-      display: none;
-    }
-  </style>
+button:disabled {
+  opacity: 0.7;
+}
+
+audio {
+  display: none;
+}
+</style>
 </head>
 
 <body>
 
-  <div class="card">
+<div class="card">
 
-    <!-- Imagen del michi -->
-    <img src="michi.png" alt="Michi con flores" class="michi">
+  <!-- Michi -->
+  <img src="michi.png" alt="Michi con flores" class="michi">
 
-    <h1>💛 Para Nayeli</h1>
+  <h1>💛 Para Nayeli</h1>
 
-    <div id="texto"></div>
+  <div id="texto"></div>
 
-    <button onclick="mostrarMensaje()">▶ Leer mensaje</button>
+  <button id="btn" onclick="iniciar()">▶ Leer mensaje</button>
 
-    <!-- Música -->
-    <audio id="musica" src="mi_corazon_encantado.mp3" loop></audio>
-  </div>
+  <!-- Música -->
+  <audio id="musica" src="mi_corazon_encantado.mp3" loop></audio>
 
-  <script>
-    const mensaje = [
-      "Solo quiero que sepas que eres lo suficientemente buena para estar conmigo.",
-      "",
-      "Eres lo más valioso que tengo,",
-      "eres una chica linda tal como eres",
-      "y no necesitas cambiar nada.",
-      "",
-      "Eres perfecta para mí,",
-      "mereces cosas muy bonitas.",
-      "",
-      "Poder estar contigo me hizo sentir amado",
-      "en un mundo donde me he sentido tan solo..."
-    ];
+</div>
 
-    let indice = 0;
-    const textoDiv = document.getElementById("texto");
-    const musica = document.getElementById("musica");
+<script>
+const mensaje = 
+"Solo quiero que sepas que eres lo suficientemente buena para estar conmigo.\n\n" +
+"Eres lo más valioso que tengo, eres una chica linda tal como eres y no necesitas cambiar nada.\n\n" +
+"Eres perfecta para mí, mereces cosas muy bonitas.\n\n" +
+"Poder estar contigo me hizo sentir amado en un mundo donde me he sentido tan solo...\n\n" +
+"Te quiero 💛";
 
-    function mostrarMensaje() {
-      musica.play();
+let i = 0;
+const texto = document.getElementById("texto");
+const musica = document.getElementById("musica");
+const btn = document.getElementById("btn");
 
-      if (indice < mensaje.length) {
-        textoDiv.innerHTML += mensaje[indice] + "\n";
-        indice++;
-        setTimeout(mostrarMensaje, 700);
-      }
-    }
-  </script>
+function iniciar() {
+  btn.disabled = true;
+
+  musica.play().catch(() => {
+    alert("Toca otra vez el botón para que suene la música 💛");
+  });
+
+  escribir();
+}
+
+function escribir() {
+  if (i < mensaje.length) {
+    texto.innerHTML += mensaje.charAt(i);
+    i++;
+    setTimeout(escribir, 40);
+  }
+}
+</script>
 
 </body>
 </html>
