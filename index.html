@@ -44,10 +44,12 @@ h1 {
   margin-bottom: 10px;
 }
 
-#texto {
+#texto p {
   color: #444;
   line-height: 1.6;
-  display: none;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.6s ease;
 }
 
 button {
@@ -65,9 +67,12 @@ button {
 
 <body>
 
+<!-- 🎵 MÚSICA -->
+<audio id="musica" src="mi_corazon_encantado.mp3"></audio>
+
 <div class="card">
 
-  <!-- 👇 AQUÍ VA EL MICHI -->
+  <!-- 🐱 MICHI -->
   <img src="michi.png" alt="Michi con flores" class="michi">
 
   <h1>Para Nayeli 💛</h1>
@@ -80,13 +85,23 @@ button {
     <p><strong>Te quiero 💛</strong></p>
   </div>
 
-  <button onclick="mostrar()">▶ Leer mensaje</button>
+  <button onclick="leer()">▶ Leer mensaje</button>
 
 </div>
 
 <script>
-function mostrar() {
-  document.getElementById("texto").style.display = "block";
+function leer() {
+  // reproducir música
+  document.getElementById("musica").play();
+
+  // animar texto línea por línea
+  const lineas = document.querySelectorAll("#texto p");
+  lineas.forEach((p, i) => {
+    setTimeout(() => {
+      p.style.opacity = 1;
+      p.style.transform = "translateY(0)";
+    }, i * 800);
+  });
 }
 </script>
 
