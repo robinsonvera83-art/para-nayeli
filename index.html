@@ -1,95 +1,117 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Para Nayeli 💛</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Para Nayeli 💛</title>
 
-<style>
-body{
-  margin:0;
-  min-height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background:linear-gradient(135deg,#ffe29f,#fbc531);
-  font-family:Arial,sans-serif;
-}
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #fceabb, #f8b500);
+      font-family: 'Segoe UI', sans-serif;
+    }
 
-.card{
-  background:#fffdf5;
-  width:90%;
-  max-width:400px;
-  padding:25px;
-  border-radius:25px;
-  text-align:center;
-  box-shadow:0 20px 40px rgba(0,0,0,.2);
-}
+    .card {
+      background: rgba(255, 255, 255, 0.96);
+      max-width: 520px;
+      padding: 30px 25px;
+      border-radius: 22px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+      text-align: center;
+    }
 
-.michi{
-  width:180px;
-  margin:10px auto 15px;
-  display:block;
-  animation:flotar 3s ease-in-out infinite;
-}
+    .michi {
+      width: 230px;
+      max-width: 80%;
+      display: block;
+      margin: 0 auto 20px auto;
+    }
 
-@keyframes flotar{
-  0%{transform:translateY(0)}
-  50%{transform:translateY(-12px)}
-  100%{transform:translateY(0)}
-}
+    h1 {
+      color: #f8b500;
+      margin-bottom: 15px;
+    }
 
-h1{color:#f5a623}
+    #texto {
+      color: #444;
+      line-height: 1.7;
+      font-size: 1rem;
+      min-height: 120px;
+      white-space: pre-line;
+    }
 
-#texto p{
-  opacity:0;
-  transform:translateY(10px);
-  transition:.6s;
-}
+    button {
+      margin-top: 20px;
+      background: #f8b500;
+      color: white;
+      border: none;
+      padding: 12px 22px;
+      border-radius: 30px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
 
-button{
-  margin-top:20px;
-  padding:12px 25px;
-  border:none;
-  border-radius:25px;
-  background:#f5a623;
-  color:white;
-  font-size:16px;
-}
-</style>
+    button:hover {
+      background: #e0a800;
+    }
+
+    audio {
+      display: none;
+    }
+  </style>
 </head>
 
 <body>
 
-<audio id="musica" src="mi_corazon_encantado.mp3"></audio>
+  <div class="card">
 
-<div class="card">
-  <img src="michi.png" class="michi">
+    <!-- Imagen del michi -->
+    <img src="michi.png" alt="Michi con flores" class="michi">
 
-  <h1>Para Nayeli 💛</h1>
+    <h1>💛 Para Nayeli</h1>
 
-  <div id="texto">
-    <p>Solo quiero que sepas que eres lo suficientemente buena para estar conmigo.</p>
-    <p>Eres lo más valioso que tengo, eres una chica linda tal como eres.</p>
-    <p>No necesitas cambiar nada.</p>
-    <p>Poder estar contigo me hizo sentir amado.</p>
-    <p><strong>Te quiero 💛</strong></p>
+    <div id="texto"></div>
+
+    <button onclick="mostrarMensaje()">▶ Leer mensaje</button>
+
+    <!-- Música -->
+    <audio id="musica" src="mi_corazon_encantado.mp3" loop></audio>
   </div>
 
-  <button onclick="leer()">▶ Leer mensaje</button>
-</div>
+  <script>
+    const mensaje = [
+      "Solo quiero que sepas que eres lo suficientemente buena para estar conmigo.",
+      "",
+      "Eres lo más valioso que tengo,",
+      "eres una chica linda tal como eres",
+      "y no necesitas cambiar nada.",
+      "",
+      "Eres perfecta para mí,",
+      "mereces cosas muy bonitas.",
+      "",
+      "Poder estar contigo me hizo sentir amado",
+      "en un mundo donde me he sentido tan solo..."
+    ];
 
-<script>
-function leer(){
-  document.getElementById("musica").play();
-  document.querySelectorAll("#texto p").forEach((p,i)=>{
-    setTimeout(()=>{
-      p.style.opacity=1;
-      p.style.transform="translateY(0)";
-    },i*800);
-  });
-}
-</script>
+    let indice = 0;
+    const textoDiv = document.getElementById("texto");
+    const musica = document.getElementById("musica");
+
+    function mostrarMensaje() {
+      musica.play();
+
+      if (indice < mensaje.length) {
+        textoDiv.innerHTML += mensaje[indice] + "\n";
+        indice++;
+        setTimeout(mostrarMensaje, 700);
+      }
+    }
+  </script>
 
 </body>
 </html>
