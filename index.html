@@ -10,177 +10,120 @@
       margin: 0;
       min-height: 100vh;
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
       background: linear-gradient(135deg, #fceabb, #f8b500);
-      font-family: Arial, sans-serif;
-      overflow: hidden;
-    }
-
-    .estrella {
-      position: absolute;
-      color: #fff;
-      opacity: 0.8;
-      animation: caer 6s linear infinite;
-    }
-
-    @keyframes caer {
-      from { transform: translateY(-10vh); }
-      to { transform: translateY(110vh); opacity: 0; }
+      font-family: 'Segoe UI', sans-serif;
     }
 
     .card {
-      background: rgba(255, 255, 255, 0.95);
+      background: rgba(255, 255, 255, 0.96);
       max-width: 520px;
       padding: 30px 25px;
-      border-radius: 20px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      border-radius: 22px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
       text-align: center;
-      z-index: 2;
     }
 
+    /* 🐱 MICHI */
     .michi {
-      width: 180px;
-      border-radius: 20px;
-      margin-bottom: 15px;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+      width: 230px;
+      max-width: 80%;
+      display: block;
+      margin: 0 auto 20px auto;
+      animation: flotar 3s ease-in-out infinite;
+    }
+
+    /* ✨ ANIMACIÓN SUAVE */
+    @keyframes flotar {
+      0%   { transform: translateY(0); }
+      50%  { transform: translateY(-8px); }
+      100% { transform: translateY(0); }
     }
 
     h1 {
       color: #f8b500;
       margin-bottom: 15px;
-      font-size: 1.9rem;
     }
 
     #texto {
       color: #444;
       line-height: 1.7;
       font-size: 1rem;
-      min-height: 160px;
-    }
-
-    .corazon {
-      font-size: 1.8rem;
-      margin-bottom: 10px;
-      animation: latir 1.5s infinite;
-    }
-
-    @keyframes latir {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.15); }
-      100% { transform: scale(1); }
+      min-height: 130px;
+      white-space: pre-line;
     }
 
     button {
-      margin-top: 15px;
-      padding: 12px 22px;
-      border: none;
-      border-radius: 25px;
+      margin-top: 20px;
       background: #f8b500;
       color: white;
+      border: none;
+      padding: 12px 22px;
+      border-radius: 30px;
       font-size: 1rem;
       cursor: pointer;
     }
 
-    .firma {
-      margin-top: 25px;
-      font-weight: bold;
-      color: #f8b500;
-      font-size: 1.05rem;
-      opacity: 0;
-      transition: opacity 1s;
+    button:hover {
+      background: #e0a800;
+    }
+
+    audio {
+      display: none;
     }
   </style>
 </head>
 
 <body>
 
-  <!-- 🎵 TU MÚSICA -->
-  <audio id="musica" loop>
-    <source src="mi_corazon_encantado.mp3" type="audio/mpeg">
-  </audio>
-
   <div class="card">
 
-    <!-- 🐱 MICHI ANARANJADO CON FLORES -->
-    <img 
-      class="michi"
-      src="https://i.imgur.com/3XKQK8n.png"
-      alt="Michi anaranjado con flores">
+    <!-- 🐱 IMAGEN DEL MICHI -->
+    <img src="michi.png" alt="Michi con flores" class="michi">
 
-    <div class="corazon">💛</div>
-    <h1>Para Nayeli</h1>
+    <h1>💛 Para Nayeli</h1>
 
     <div id="texto"></div>
 
-    <button onclick="iniciar()">▶ Leer mensaje</button>
+    <button onclick="mostrarMensaje()">▶ Leer mensaje</button>
 
-    <div class="firma" id="firma">
-      Con cariño,<br>
-      tu niño Robin 💖
-    </div>
+    <!-- 🎵 MÚSICA -->
+    <audio id="musica" src="mi_corazon_encantado.mp3" loop></audio>
   </div>
 
-<script>
-const mensaje = [
-  "Solo quiero que sepas que eres lo suficientemente buena para estar conmigo.",
-  "",
-  "Eres lo más valioso que tengo,",
-  "eres una chica linda tal como eres",
-  "y no necesitas cambiar nada.",
-  "",
-  "Eres perfecta para mí,",
-  "mereces cosas muy bonitas.",
-  "",
-  "Poder estar contigo me hizo sentir amado",
-  "en un mundo donde me he sentido tan solo..."
-];
+  <script>
+    const mensaje = [
+      "Solo quiero que sepas que eres lo suficientemente buena para estar conmigo.",
+      "",
+      "Eres lo más valioso que tengo,",
+      "eres una chica linda tal como eres",
+      "y no necesitas cambiar nada.",
+      "",
+      "Eres perfecta para mí,",
+      "mereces cosas muy bonitas.",
+      "",
+      "Poder estar contigo me hizo sentir amado",
+      "en un mundo donde me he sentido tan solo...",
+      "",
+      "Te quiero ❤️"
+    ];
 
-let linea = 0;
-let letra = 0;
+    let indice = 0;
+    const textoDiv = document.getElementById("texto");
+    const musica = document.getElementById("musica");
 
-function iniciar() {
-  const audio = document.getElementById("musica");
-  audio.volume = 1;
-  audio.play().catch(() => {
-    alert("Toca otra vez el botón para que suene la música 💛");
-  });
+    function mostrarMensaje() {
+      musica.play();
 
-  document.getElementById("texto").innerHTML = "";
-  document.getElementById("firma").style.opacity = 0;
-  linea = 0;
-  letra = 0;
-  escribir();
-}
-
-function escribir() {
-  if (linea < mensaje.length) {
-    if (letra < mensaje[linea].length) {
-      document.getElementById("texto").innerHTML += mensaje[linea].charAt(letra);
-      letra++;
-      setTimeout(escribir, 40);
-    } else {
-      document.getElementById("texto").innerHTML += "<br>";
-      linea++;
-      letra = 0;
-      setTimeout(escribir, 400);
+      if (indice < mensaje.length) {
+        textoDiv.innerHTML += mensaje[indice] + "\n";
+        indice++;
+        setTimeout(mostrarMensaje, 900);
+      }
     }
-  } else {
-    document.getElementById("firma").style.opacity = 1;
-  }
-}
-
-// ✨ Estrellas
-setInterval(() => {
-  const estrella = document.createElement("div");
-  estrella.className = "estrella";
-  estrella.innerHTML = "✨";
-  estrella.style.left = Math.random() * 100 + "vw";
-  estrella.style.fontSize = (Math.random() * 10 + 10) + "px";
-  document.body.appendChild(estrella);
-  setTimeout(() => estrella.remove(), 6000);
-}, 400);
-</script>
+  </script>
 
 </body>
 </html>
+
