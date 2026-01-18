@@ -161,7 +161,7 @@ function escribir() {
     if (letra < mensaje[linea].length) {
       document.getElementById("texto").innerHTML += mensaje[linea].charAt(letra);
       letra++;
-      setTimeout(escribir, 65);
+      setTimeout(escribir, 70);
     } else {
       document.getElementById("texto").innerHTML += "<br>";
       linea++;
@@ -187,4 +187,5 @@ setInterval(() => {
 
 </body>
 </html>
+
 
