@@ -13,13 +13,13 @@
       align-items: center;
       justify-content: center;
       background: linear-gradient(135deg, #fceabb, #f8b500);
-      font-family: 'Segoe UI', sans-serif;
+      font-family: Arial, sans-serif;
       overflow: hidden;
     }
 
     .estrella {
       position: absolute;
-      color: white;
+      color: #fff;
       opacity: 0.8;
       animation: caer 6s linear infinite;
     }
@@ -34,7 +34,7 @@
       max-width: 520px;
       padding: 30px 25px;
       border-radius: 20px;
-      box-shadow: 0 20px 40px rgba(0,0,0,.15);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
       text-align: center;
       z-index: 2;
     }
@@ -42,76 +42,131 @@
     h1 {
       color: #f8b500;
       margin-bottom: 15px;
+      font-size: 1.9rem;
     }
 
     #texto {
       color: #444;
       line-height: 1.7;
-      min-height: 140px;
+      font-size: 1rem;
+      min-height: 160px;
     }
 
     .corazon {
       font-size: 1.8rem;
+      margin-bottom: 10px;
       animation: latir 1.5s infinite;
-      display: inline-block;
-      margin-top: 10px;
     }
 
     @keyframes latir {
-      0%,100% { transform: scale(1); }
-      50% { transform: scale(1.2); }
+      0% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+      100% { transform: scale(1); }
     }
 
     button {
-      margin-top: 20px;
-      padding: 12px 25px;
-      font-size: 1rem;
+      margin-top: 15px;
+      padding: 12px 22px;
       border: none;
-      border-radius: 30px;
+      border-radius: 25px;
       background: #f8b500;
       color: white;
+      font-size: 1rem;
       cursor: pointer;
     }
 
-    audio {
-      margin-top: 15px;
-      width: 100%;
+    .firma {
+      margin-top: 25px;
+      font-weight: bold;
+      color: #f8b500;
+      font-size: 1.05rem;
+      opacity: 0;
+      transition: opacity 1s;
     }
   </style>
 </head>
 
 <body>
 
+  <!-- 🎵 PON AQUÍ TU MÚSICA -->
+  <audio id="musica" loop>
+    <source src="mi_corazon_encantado.mp3" type="audio/mpeg">
+  </audio>
+
   <div class="card">
-    <h1>Para ti 💛</h1>
+    <div class="corazon">💛</div>
+    <h1>Para Nayeli</h1>
 
-    <div id="texto">
-      <p>
-        Solo quiero que sepas que eres lo suficientemente buena para estar conmigo.
-        Eres lo más valioso que tengo, eres una chica linda tal como eres y no
-        necesitas cambiar nada. Eres perfecta para mí, mereces cosas muy bonitas.
-        Poder estar contigo me hizo sentir amado en un mundo donde me he sentido tan solo...
-      </p>
-      <div class="corazon">💛</div>
+    <div id="texto"></div>
+
+    <button onclick="iniciar()">▶ Leer mensaje</button>
+
+    <div class="firma" id="firma">
+      Con cariño,<br>
+      tu niño Robin 💛
     </div>
-
-    <audio controls>
-      <source src="mi_corazon_encantado.mp3" type="audio/mpeg">
-      Tu navegador no soporta audio.
-    </audio>
   </div>
 
-  <script>
-    for (let i = 0; i < 25; i++) {
-      const estrella = document.createElement('div');
-      estrella.className = 'estrella';
-      estrella.innerHTML = '✨';
-      estrella.style.left = Math.random() * 100 + 'vw';
-      estrella.style.animationDuration = (Math.random() * 3 + 3) + 's';
-      estrella.style.fontSize = (Math.random() * 20 + 10) + 'px';
-      document.body.appendChild(estrella);
+<script>
+const mensaje = [
+  "Solo quiero que sepas que eres lo suficientemente buena para estar conmigo.",
+  "",
+  "Eres lo más valioso que tengo,",
+  "eres una chica linda tal como eres",
+  "y no necesitas cambiar nada.",
+  "",
+  "Eres perfecta para mí,",
+  "mereces cosas muy bonitas.",
+  "",
+  "Poder estar contigo me hizo sentir amado",
+  "en un mundo donde me he sentido tan solo..."
+];
+
+let linea = 0;
+let letra = 0;
+
+function iniciar() {
+  const audio = document.getElementById("musica");
+  audio.volume = 1;
+  audio.play().catch(() => {
+    alert("Toca otra vez el botón para que suene la música 💛");
+  });
+
+  document.getElementById("texto").innerHTML = "";
+  document.getElementById("firma").style.opacity = 0;
+  linea = 0;
+  letra = 0;
+  escribir();
+}
+
+function escribir() {
+  if (linea < mensaje.length) {
+    if (letra < mensaje[linea].length) {
+      document.getElementById("texto").innerHTML += mensaje[linea].charAt(letra);
+      letra++;
+      setTimeout(escribir, 40);
+    } else {
+      document.getElementById("texto").innerHTML += "<br>";
+      linea++;
+      letra = 0;
+      setTimeout(escribir, 400);
     }
-  </script>
+  } else {
+    document.getElementById("firma").style.opacity = 1;
+  }
+}
+
+// ✨ Estrellas
+setInterval(() => {
+  const estrella = document.createElement("div");
+  estrella.className = "estrella";
+  estrella.innerHTML = "✨";
+  estrella.style.left = Math.random() * 100 + "vw";
+  estrella.style.fontSize = (Math.random() * 10 + 10) + "px";
+  document.body.appendChild(estrella);
+  setTimeout(() => estrella.remove(), 6000);
+}, 400);
+</script>
 
 </body>
 </html>
