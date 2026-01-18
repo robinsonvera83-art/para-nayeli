@@ -1,126 +1,171 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Para Nayeli 💛</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Para Nayeli 💛</title>
 
-<style>
-body {
-  margin: 0;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(135deg, #fceabb, #f8b500);
-  font-family: 'Segoe UI', sans-serif;
-}
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #fceabb, #f8b500);
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+    }
 
-/* Tarjeta SIN fondo sólido */
-.card {
-  max-width: 520px;
-  padding: 30px 25px;
-  text-align: center;
-}
+    .estrella {
+      position: absolute;
+      color: #fff;
+      opacity: 0.8;
+      animation: caer 6s linear infinite;
+    }
 
-/* Animación del michi */
-.michi {
-  width: 220px;
-  max-width: 80%;
-  margin: 0 auto 20px;
-  animation: flotar 3s ease-in-out infinite;
-}
+    @keyframes caer {
+      from { transform: translateY(-10vh); }
+      to { transform: translateY(110vh); opacity: 0; }
+    }
 
-@keyframes flotar {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0); }
-}
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      max-width: 520px;
+      padding: 30px 25px;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      text-align: center;
+      z-index: 2;
+    }
 
-h1 {
-  color: #f8b500;
-  margin-bottom: 15px;
-}
+    h1 {
+      color: #f8b500;
+      margin-bottom: 15px;
+      font-size: 1.9rem;
+    }
 
-#texto {
-  color: #444;
-  line-height: 1.7;
-  font-size: 1rem;
-  min-height: 150px;
-  white-space: pre-line;
-  opacity: 0.95;
-}
+    #texto {
+      color: #444;
+      line-height: 1.7;
+      font-size: 1rem;
+      min-height: 160px;
+    }
 
-/* Botón */
-button {
-  margin-top: 20px;
-  background: #f8b500;
-  color: white;
-  border: none;
-  padding: 14px 26px;
-  border-radius: 30px;
-  font-size: 1rem;
-  cursor: pointer;
-}
+    .corazon {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+      animation: latir 1.5s infinite;
+    }
 
-button:disabled {
-  opacity: 0.7;
-}
+    @keyframes latir {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+      100% { transform: scale(1); }
+    }
 
-audio {
-  display: none;
-}
-</style>
+    button {
+      margin-top: 15px;
+      padding: 12px 22px;
+      border: none;
+      border-radius: 25px;
+      background: #f8b500;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .firma {
+      margin-top: 25px;
+      font-weight: bold;
+      color: #f8b500;
+      font-size: 1.05rem;
+      opacity: 0;
+      transition: opacity 1s;
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="card">
+  <!-- 🎵 PON AQUÍ TU MÚSICA -->
+  <audio id="musica" loop>
+    <source src="mi_corazon_encantado.mp3" type="audio/mpeg">
+  </audio>
 
-  <!-- Michi -->
-  <img src="michi.png" alt="Michi con flores" class="michi">
+  <div class="card">
+    <div class="corazon">💛</div>
+    <h1>Para Nayeli</h1>
 
-  <h1>💛 Para Nayeli</h1>
+    <div id="texto"></div>
 
-  <div id="texto"></div>
+    <button onclick="iniciar()">▶ Leer mensaje</button>
 
-  <button id="btn" onclick="iniciar()">▶ Leer mensaje</button>
-
-  <!-- Música -->
-  <audio id="musica" src="mi_corazon_encantado.mp3" loop></audio>
-
-</div>
+    <div class="firma" id="firma">
+      Con cariño,<br>
+      tu niño Robin 💛
+    </div>
+  </div>
 
 <script>
-const mensaje = 
-"Solo quiero que sepas que eres lo suficientemente buena para estar conmigo.\n\n" +
-"Eres lo más valioso que tengo, eres una chica linda tal como eres y no necesitas cambiar nada.\n\n" +
-"Eres perfecta para mí, mereces cosas muy bonitas.\n\n" +
-"Poder estar contigo me hizo sentir amado en un mundo donde me he sentido tan solo...\n\n" +
-"Te quiero 💛";
+const mensaje = [
+  "Solo quiero que sepas que eres lo suficientemente buena para estar conmigo.",
+  "",
+  "Eres lo más valioso que tengo,",
+  "eres una chica linda tal como eres",
+  "y no necesitas cambiar nada.",
+  "",
+  "Eres perfecta para mí,",
+  "mereces cosas muy bonitas.",
+  "",
+  "Poder estar contigo me hizo sentir amado",
+  "en un mundo donde me he sentido tan solo..."
+];
 
-let i = 0;
-const texto = document.getElementById("texto");
-const musica = document.getElementById("musica");
-const btn = document.getElementById("btn");
+let linea = 0;
+let letra = 0;
 
 function iniciar() {
-  btn.disabled = true;
-
-  musica.play().catch(() => {
+  const audio = document.getElementById("musica");
+  audio.volume = 1;
+  audio.play().catch(() => {
     alert("Toca otra vez el botón para que suene la música 💛");
   });
 
+  document.getElementById("texto").innerHTML = "";
+  document.getElementById("firma").style.opacity = 0;
+  linea = 0;
+  letra = 0;
   escribir();
 }
 
 function escribir() {
-  if (i < mensaje.length) {
-    texto.innerHTML += mensaje.charAt(i);
-    i++;
-    setTimeout(escribir, 40);
+  if (linea < mensaje.length) {
+    if (letra < mensaje[linea].length) {
+      document.getElementById("texto").innerHTML += mensaje[linea].charAt(letra);
+      letra++;
+      setTimeout(escribir, 40);
+    } else {
+      document.getElementById("texto").innerHTML += "<br>";
+      linea++;
+      letra = 0;
+      setTimeout(escribir, 400);
+    }
+  } else {
+    document.getElementById("firma").style.opacity = 1;
   }
 }
+
+// ✨ Estrellas
+setInterval(() => {
+  const estrella = document.createElement("div");
+  estrella.className = "estrella";
+  estrella.innerHTML = "✨";
+  estrella.style.left = Math.random() * 100 + "vw";
+  estrella.style.fontSize = (Math.random() * 10 + 10) + "px";
+  document.body.appendChild(estrella);
+  setTimeout(() => estrella.remove(), 6000);
+}, 400);
 </script>
 
 </body>
