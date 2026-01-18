@@ -41,8 +41,15 @@
 
     h1 {
       color: #f8b500;
-      margin-bottom: 15px;
+      margin-bottom: 10px;
       font-size: 1.9rem;
+    }
+
+    .michi {
+      width: 160px;
+      max-width: 60%;
+      margin: 15px auto;
+      display: block;
     }
 
     #texto {
@@ -88,7 +95,7 @@
 
 <body>
 
-  <!-- 🎵 PON AQUÍ TU MÚSICA -->
+  <!-- 🎵 MÚSICA -->
   <audio id="musica" loop>
     <source src="mi_corazon_encantado.mp3" type="audio/mpeg">
   </audio>
@@ -96,6 +103,9 @@
   <div class="card">
     <div class="corazon">💛</div>
     <h1>Para Nayeli</h1>
+
+    <!-- 🐱 MICHI -->
+    <img src="michi.png" alt="Michi con flores" class="michi">
 
     <div id="texto"></div>
 
@@ -124,8 +134,12 @@ const mensaje = [
 
 let linea = 0;
 let letra = 0;
+let iniciado = false;
 
 function iniciar() {
+  if (iniciado) return;
+  iniciado = true;
+
   const audio = document.getElementById("musica");
   audio.volume = 1;
   audio.play().catch(() => {
@@ -156,7 +170,7 @@ function escribir() {
   }
 }
 
-// ✨ Estrellas
+// ✨ ESTRELLAS
 setInterval(() => {
   const estrella = document.createElement("div");
   estrella.className = "estrella";
@@ -165,7 +179,7 @@ setInterval(() => {
   estrella.style.fontSize = (Math.random() * 10 + 10) + "px";
   document.body.appendChild(estrella);
   setTimeout(() => estrella.remove(), 6000);
-}, 400);
+}, 500);
 </script>
 
 </body>
