@@ -8,30 +8,68 @@
 <style>
 body{
   margin:0;
-  height:100vh;
-  overflow:hidden;
+  min-height:100vh;
   display:flex;
   justify-content:center;
   align-items:center;
   background:linear-gradient(135deg,#fceabb,#f8b500);
   font-family:Arial,sans-serif;
+  overflow:hidden;
   transition:background 2s;
 }
 
-/* CARD */
-.card{
-  background:#fffdf6;
-  width:90%;
-  max-width:500px;
-  padding:25px;
-  border-radius:20px;
-  text-align:center;
-  box-shadow:0 20px 40px rgba(0,0,0,.2);
-  z-index:5;
+body.final{
+  background:linear-gradient(135deg,#3a2c00,#000);
 }
 
-h1{color:#f8b500}
-#texto{color:#444;line-height:1.6}
+/* ⭐ estrellas */
+.estrella{
+  position:absolute;
+  color:#fff;
+  animation:caer 6s linear infinite;
+}
+@keyframes caer{
+  from{transform:translateY(-10vh);}
+  to{transform:translateY(110vh);opacity:0;}
+}
+
+/* 💌 tarjeta */
+.card{
+  background:rgba(255,255,255,.95);
+  width:90%;
+  max-width:520px;
+  max-height:85vh;
+  padding:25px 20px;
+  border-radius:20px;
+  box-shadow:0 20px 40px rgba(0,0,0,.15);
+  text-align:center;
+  z-index:2;
+  overflow-y:auto;
+}
+
+h1{
+  color:#f8b500;
+  margin:10px 0;
+}
+
+.corazon{
+  font-size:1.8rem;
+  animation:latir 1.5s infinite;
+}
+@keyframes latir{
+  50%{transform:scale(1.15);}
+}
+
+.michi{
+  width:150px;
+  margin:15px auto;
+  display:block;
+}
+
+#texto{
+  color:#444;
+  line-height:1.6;
+}
 
 button{
   margin-top:15px;
@@ -44,247 +82,157 @@ button{
   cursor:pointer;
 }
 
-/* BOTÓN SÍ VIBRA */
-.vibrar{
-  animation:vibrar .4s infinite;
-}
-@keyframes vibrar{
-  0%{transform:translateX(0)}
-  25%{transform:translateX(-2px)}
-  50%{transform:translateX(2px)}
-  75%{transform:translateX(-2px)}
-  100%{transform:translateX(0)}
+/* 💍 pregunta */
+#pregunta{
+  display:none;
+  margin-top:20px;
 }
 
-/* CORAZONES */
-.corazon{
-  position:fixed;
-  font-size:18px;
-  animation:flotar 7s linear infinite;
-  opacity:.8;
-}
-@keyframes flotar{
-  from{transform:translateY(110vh)}
-  to{transform:translateY(-40vh)}
-}
-
-/* TE AMO */
-.teamo{
-  position:fixed;
-  color:#ff5fa2;
-  font-size:14px;
-  animation:flotarTexto 9s linear infinite;
-}
-@keyframes flotarTexto{
-  from{transform:translateY(120vh)}
-  to{transform:translateY(-50vh)}
-}
-
-/* CONTADOR */
-#contador{
-  font-size:3rem;
+.firma{
+  margin-top:25px;
+  font-weight:bold;
   color:#f8b500;
-  animation:temblar .4s infinite;
-}
-@keyframes temblar{
-  0%{transform:translateX(0)}
-  25%{transform:translateX(-3px)}
-  50%{transform:translateX(3px)}
-  75%{transform:translateX(-3px)}
-  100%{transform:translateX(0)}
+  opacity:0;
+  transition:opacity 1s;
 }
 
-/* FINAL */
-.amo-central{
+/* 💛 lluvia amor */
+.amor{
   position:fixed;
-  top:30%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  text-align:center;
-  z-index:10;
-  color:white;
-  font-size:1.8rem;
-  text-shadow:0 0 12px #ffb6ff;
+  bottom:-10%;
+  animation:subir 6s linear forwards;
+  pointer-events:none;
 }
-
-/* BRILLO */
-.brillo{
-  animation:brillar 2s infinite;
-}
-@keyframes brillar{
-  0%{text-shadow:0 0 10px #fff}
-  50%{text-shadow:0 0 25px #ff9}
-  100%{text-shadow:0 0 10px #fff}
-}
-
-/* ANILLO */
-.anillo{
-  position:fixed;
-  top:38%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  font-size:60px;
-  animation:giro 3s linear infinite;
-}
-@keyframes giro{
-  from{transform:translate(-50%,-50%) rotate(0)}
-  to{transform:translate(-50%,-50%) rotate(360deg)}
-}
-
-/* CORAZÓN GRANDE */
-.corazon-grande{
-  position:fixed;
-  top:55%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  font-size:90px;
-  animation:latir 2s infinite;
-}
-@keyframes latir{
-  0%{transform:translate(-50%,-50%) scale(1)}
-  50%{transform:translate(-50%,-50%) scale(1.2)}
-  100%{transform:translate(-50%,-50%) scale(1)}
-}
-
-/* FUEGOS */
-.fuego{
-  position:fixed;
-  font-size:25px;
-  animation:explota 2s ease-out forwards;
-}
-@keyframes explota{
-  0%{transform:scale(0)}
-  50%{transform:scale(1.5)}
-  100%{transform:scale(0);opacity:0}
+@keyframes subir{
+  to{transform:translateY(-120vh);opacity:0;}
 }
 </style>
 </head>
 
 <body>
 
-<audio id="musica" preload="auto" loop>
+<!-- 🎵 músicas -->
+<audio id="musicaInicio" loop>
   <source src="mi_corazon_encantado.mp3" type="audio/mpeg">
 </audio>
 
-<div class="card" id="card">
-  <h1>Para Nayeli 💛</h1>
+<audio id="musicaFinal">
+  <source src="pensando_en_ti.mp3" type="audio/mpeg">
+</audio>
+
+<div class="card">
+  <div class="corazon">💛</div>
+  <h1>Para Nayeli</h1>
+
+  <img src="michi.png" class="michi">
+
   <div id="texto"></div>
-  <button id="btn" onclick="iniciar()">▶ Leer mensaje</button>
+
+  <button onclick="iniciar()">▶ Leer mensaje</button>
+
+  <div id="pregunta">
+    <h2>¿Quieres ser mi novia? 💍</h2>
+    <button onclick="aceptar()">💛 Sí 💛</button>
+  </div>
+
+  <button id="btnMusica" onclick="reproducirSoloMusica()" style="display:none;opacity:0;">
+    🎶 Te la dedico mi amorcito
+  </button>
+
+  <div class="firma" id="firma">
+    Con cariño,<br>tu niño Robin 💛
+  </div>
 </div>
 
 <script>
 const mensaje=[
-"Me encariñé tan rápido contigo porque fuiste la única persona",
-"que me hizo sentir que yo valía algo.",
-"Llegaste cuando más perdido estaba",
-"y me devolviste la sonrisa.",
-"Por eso te llevo en el corazón.",
-"TE AMO CON TODO MI SER 💖"
+"Me encariñé contigo más rápido de lo que imaginé,",
+"porque llegaste cuando me sentía perdido.",
+"Me hiciste sentir que valía algo,",
+"y desde entonces te llevo en mi corazón."
 ];
 
 let l=0,c=0,iniciado=false;
 
 function iniciar(){
- if(iniciado) return;
+ if(iniciado)return;
  iniciado=true;
- musica.play();
- btn.style.display="none";
+
+ const audio=document.getElementById("musicaInicio");
+ audio.play().catch(()=>{});
+
  escribir();
- setInterval(crearCorazon,700);
- setInterval(crearTeAmo,1000);
 }
 
 function escribir(){
  if(l<mensaje.length){
   if(c<mensaje[l].length){
-   texto.innerHTML+=mensaje[l][c++];
-   setTimeout(escribir,55);
+   texto.innerHTML+=mensaje[l].charAt(c);
+   c++;
+   setTimeout(escribir,60);
   }else{
    texto.innerHTML+="<br>";
    l++;c=0;
-   setTimeout(escribir,350);
+   setTimeout(escribir,400);
   }
  }else{
-  setTimeout(conteo,5000);
+  document.getElementById("firma").style.opacity=1;
+  document.getElementById("pregunta").style.display="block";
  }
 }
 
-function conteo(){
- texto.innerHTML=`<div>✨ Sorpresa ✨</div><div id="contador">20</div>`;
- let t=20;
- let i=setInterval(()=>{
-  t--;contador.textContent=t;
-  if(t===0){clearInterval(i);preguntar();}
- },1000);
-}
-
-function preguntar(){
- texto.innerHTML=`<h2>¿Quieres ser mi novia? 💛</h2>
- <button class="vibrar" onclick="aceptar()">SÍ</button>`;
-}
-
 function aceptar(){
- card.remove();
- finalRomantico();
+ document.getElementById("texto").innerHTML="";
+ document.getElementById("pregunta").style.display="none";
+ document.getElementById("firma").style.opacity=0;
+
+ document.body.classList.add("final");
+
+ const btn=document.getElementById("btnMusica");
+ btn.style.display="block";
+ setTimeout(()=>btn.style.opacity=1,100);
+
+ iniciarLluviaAmor();
 }
 
-function finalRomantico(){
- document.body.style.background="linear-gradient(135deg,#0f2027,#203a43,#2c5364)";
- escribirFinal("TE AMO NAYELI 💛\nPara siempre 💍");
- crearFuegos();
+function reproducirSoloMusica(){
+ const fin=document.getElementById("musicaFinal");
+ const ini=document.getElementById("musicaInicio");
+ ini.pause();ini.currentTime=0;
+
+ fin.volume=0;
+ fin.play();
+
+ let v=0;
+ const fade=setInterval(()=>{
+  if(v<1){v+=0.05;fin.volume=v;}
+  else clearInterval(fade);
+ },200);
 }
 
-function escribirFinal(txt){
- let d=document.createElement("div");
- d.className="amo-central brillo";
- document.body.appendChild(d);
- let i=0;
- let inter=setInterval(()=>{
-  d.innerHTML+=txt[i]==="\n"?"<br>":txt[i];
-  i++;
-  if(i>=txt.length)clearInterval(inter);
- },80);
-
- let a=document.createElement("div");
- a.className="anillo";
- a.innerHTML="💍";
- document.body.appendChild(a);
-
- let c=document.createElement("div");
- c.className="corazon-grande";
- c.innerHTML="💖";
- document.body.appendChild(c);
-}
-
-function crearFuegos(){
+function iniciarLluviaAmor(){
  setInterval(()=>{
-  let f=document.createElement("div");
-  f.className="fuego";
-  f.innerHTML="🎆";
-  f.style.left=Math.random()*100+"vw";
-  f.style.top=Math.random()*60+"vh";
-  document.body.appendChild(f);
-  setTimeout(()=>f.remove(),2000);
+  const d=document.createElement("div");
+  d.className="amor";
+  const msgs=["💛","❤️","💖","Te amo","Te amo Nayeli"];
+  d.innerText=msgs[Math.floor(Math.random()*msgs.length)];
+  d.style.left=Math.random()*100+"vw";
+  d.style.fontSize=(Math.random()*20+15)+"px";
+  document.body.appendChild(d);
+  setTimeout(()=>d.remove(),6000);
  },400);
 }
 
-function crearCorazon(){
- let c=document.createElement("div");
- c.className="corazon";
- c.innerHTML="💛";
- c.style.left=Math.random()*100+"vw";
- document.body.appendChild(c);
- setTimeout(()=>c.remove(),7000);
-}
-
-function crearTeAmo(){
- let t=document.createElement("div");
- t.className="teamo";
- t.innerHTML="TE AMO";
- t.style.left=Math.random()*100+"vw";
- document.body.appendChild(t);
- setTimeout(()=>t.remove(),9000);
-}
+/* ⭐ estrellas */
+setInterval(()=>{
+ const e=document.createElement("div");
+ e.className="estrella";
+ e.innerText="✨";
+ e.style.left=Math.random()*100+"vw";
+ e.style.fontSize=(Math.random()*10+10)+"px";
+ document.body.appendChild(e);
+ setTimeout(()=>e.remove(),6000);
+},600);
 </script>
 
 </body>
