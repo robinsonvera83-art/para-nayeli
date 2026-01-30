@@ -57,7 +57,7 @@ body{
   max-width:300px;
 }
 
-/* BOTONES */
+/* BOTÓN */
 button{
   padding:12px 25px;
   border:none;
@@ -101,6 +101,12 @@ button{
 
 @keyframes subir{
   to{ transform:translateY(-110vh); opacity:0; }
+}
+
+.texto-amo{
+  color:#ff2f6d;
+  font-weight:bold;
+  text-shadow:0 0 6px rgba(0,0,0,.35);
 }
 
 .temblar-texto{
@@ -152,6 +158,28 @@ button{
     opacity:0;
   }
 }
+
+/* TE AMO CENTRAL */
+.amo-central{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%) scale(0);
+  font-size:2.4rem;
+  font-weight:bold;
+  color:#ff2f6d;
+  text-shadow:0 0 14px rgba(255,47,109,.8);
+  animation:aparecerLatir 3s forwards;
+  z-index:8;
+}
+
+@keyframes aparecerLatir{
+  0%{transform:translate(-50%,-50%) scale(0);opacity:0}
+  40%{transform:translate(-50%,-50%) scale(1.2);opacity:1}
+  60%{transform:translate(-50%,-50%) scale(1)}
+  80%{transform:translate(-50%,-50%) scale(1.15)}
+  100%{transform:translate(-50%,-50%) scale(1)}
+}
 </style>
 </head>
 
@@ -164,10 +192,10 @@ button{
 </div>
 
 <script>
-const texto = document.getElementById("texto");
-const card = document.getElementById("card");
+const texto=document.getElementById("texto");
+const card=document.getElementById("card");
 
-const mensaje = `Me encariñé contigo tan rápido
+const mensaje=`Me encariñé contigo tan rápido
 porque llegaste cuando me sentía vacío.
 
 Me hiciste sentir importante,
@@ -178,19 +206,17 @@ Gracias por existir.
 Te amo con todo mi corazón 💖`;
 
 let i=0;
-
 document.body.addEventListener("click",escribir,{once:true});
 
 function escribir(){
-  if(i < mensaje.length){
-    texto.innerHTML += mensaje[i++];
+  if(i<mensaje.length){
+    texto.innerHTML+=mensaje[i++];
     setTimeout(escribir,40);
   }else{
     setTimeout(conteo,2000);
   }
 }
 
-/* CONTEO */
 function conteo(){
   let s=10;
   const o=document.createElement("div");
@@ -214,7 +240,6 @@ function conteo(){
   },1000);
 }
 
-/* PREGUNTA */
 function preguntar(){
   const o=document.createElement("div");
   o.className="pregunta";
@@ -226,7 +251,6 @@ function preguntar(){
   document.body.appendChild(o);
 }
 
-/* ACEPTAR */
 function aceptar(){
   card.remove();
   document.querySelectorAll(".pregunta").forEach(p=>p.remove());
@@ -244,42 +268,48 @@ function aceptar(){
   anillo.innerHTML="💍";
   document.body.appendChild(anillo);
 
-  setInterval(crearFlotantes,250);
   lanzarFuegos();
+  setInterval(crearFlotantes,250);
+  amoCentral();
 }
 
-/* FLOTANTES */
 function crearFlotantes(){
   const e=document.createElement("div");
   e.className="flotar";
   const opciones=[
     "💖",
     "💛",
-    "<span class='temblar-texto'>TE AMO</span>",
-    "<span class='temblar-texto'>TE AMO NAYELI</span>",
-    "<span class='temblar-texto'>PARA SIEMPRE 💍</span>"
+    "<span class='texto-amo temblar-texto'>TE AMO</span>",
+    "<span class='texto-amo temblar-texto'>TE AMO NAYELI</span>",
+    "<span class='texto-amo temblar-texto'>PARA SIEMPRE 💍</span>"
   ];
   e.innerHTML=opciones[Math.floor(Math.random()*opciones.length)];
   e.style.left=Math.random()*100+"vw";
-  e.style.fontSize=14+Math.random()*26+"px";
-  e.style.color="white";
+  e.style.fontSize=18+Math.random()*22+"px";
   document.body.appendChild(e);
   setTimeout(()=>e.remove(),5000);
 }
 
-/* FUEGOS */
 function lanzarFuegos(){
-  for(let i=0;i<60;i++){
+  for(let i=0;i<70;i++){
     const f=document.createElement("div");
     f.className="fuego";
     f.style.left="50%";
     f.style.top="50%";
     f.style.background=`hsl(${Math.random()*360},100%,50%)`;
-    f.style.setProperty("--x",(Math.random()*600-300)+"px");
-    f.style.setProperty("--y",(Math.random()*600-300)+"px");
+    f.style.setProperty("--x",(Math.random()*700-350)+"px");
+    f.style.setProperty("--y",(Math.random()*700-350)+"px");
     document.body.appendChild(f);
     setTimeout(()=>f.remove(),1000);
   }
+}
+
+function amoCentral(){
+  const t=document.createElement("div");
+  t.className="amo-central";
+  t.innerHTML="TE AMO NAYELI 💖";
+  document.body.appendChild(t);
+  setTimeout(()=>t.remove(),6000);
 }
 </script>
 
