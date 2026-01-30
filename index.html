@@ -34,7 +34,12 @@ h1{color:#f8b500;font-size:1.9rem;}
 
 .michi{width:150px;max-width:60%;margin:15px auto;display:block;}
 
-#texto{color:#444;line-height:1.6;font-size:1rem;min-height:120px;}
+#texto{
+  color:#444;
+  line-height:1.6;
+  font-size:1rem;
+  min-height:120px;
+}
 
 button{
   margin-top:15px;
@@ -101,12 +106,6 @@ button{
   color:#f8b500;
   margin-bottom:20px;
 }
-
-.pregunta-card button{
-  margin:10px;
-  padding:10px 20px;
-  font-size:1rem;
-}
 </style>
 </head>
 
@@ -119,10 +118,12 @@ button{
 <div class="card">
   <div class="corazon">💛</div>
   <h1>Para Nayeli</h1>
+
   <img src="michi.png" class="michi">
 
   <div id="texto"></div>
-  <button onclick="iniciar(this)">▶ Leer mensaje</button>
+
+  <button id="btn" onclick="iniciar()">▶ Leer mensaje</button>
 
   <div class="firma" id="firma">
     Con cariño,<br>tu niño Robin 💛
@@ -130,6 +131,12 @@ button{
 </div>
 
 <script>
+// 🔒 REFERENCIAS SEGURAS (CLAVE)
+const texto = document.getElementById("texto");
+const firma = document.getElementById("firma");
+const musica = document.getElementById("musica");
+const boton = document.getElementById("btn");
+
 const mensaje=[
 "Me encariñé tan rápido contigo porque fuiste la única persona",
 "que me hizo sentir que yo valía algo,",
@@ -142,11 +149,14 @@ const mensaje=[
 
 let l=0,c=0,iniciado=false;
 
-function iniciar(btn){
+function iniciar(){
  if(iniciado)return;
  iniciado=true;
- btn.style.display="none";
- musica.play().catch(()=>{});
+ boton.style.display="none";
+
+ musica.currentTime=0;
+ musica.play();
+
  escribir();
 }
 
@@ -204,86 +214,9 @@ function preguntar(){
 }
 
 function acepto(){
- alert("Gracias por hacerme el más feliz del mundo 💖");
+ alert("Ahora soy el más feliz del mundo 💖");
 }
 </script>
 
 </body>
 </html>
-    <div class="firma" id="firma">
-      Con cariño,<br>
-      tu niño Robin 💛
-    </div>
-  </div>
-
-<script>
-const mensaje = [
-"Me encariñé tan rápido contigo porque fuiste la única persona",
-  "que me hizo sentir que yo valía algo,",
-  "después de tanto tiempo sintiéndome como nada.",
-  "Llegaste cuando más perdido estaba",
-  "y me devolviste la sonrisa y las ganas de creer en mí.",
-  "Por eso te llevo en el corazón.",
-  "TE AMO CON TODO MI SER 💖."
-];
-
-let linea = 0;
-let letra = 0;
-let iniciado = false;
-
-function iniciar() {
-  if (iniciado) return;
-  iniciado = true;
-
-  const audio = document.getElementById("musica");
-  audio.volume = 1;
-  audio.play().catch(() => {
-    alert("Toca otra vez el botón para que suene la música 💛");
-  });
-
-  document.getElementById("texto").innerHTML = "";
-  document.getElementById("firma").style.opacity = 0;
-  linea = 0;
-  letra = 0;
-  escribir();
-}
-
-function escribir() {
-  if (linea < mensaje.length) {
-    if (letra < mensaje[linea].length) {
-      document.getElementById("texto").innerHTML += mensaje[linea].charAt(letra);
-      letra++;
-      setTimeout(escribir, 65);
-    } else {
-      document.getElementById("texto").innerHTML += "<br>";
-      linea++;
-      letra = 0;
-      setTimeout(escribir, 350);
-    }
-  } else {
-    document.getElementById("firma").style.opacity = 1;
-  }
-}
-
-// ✨ ESTRELLAS
-setInterval(() => {
-  const estrella = document.createElement("div");
-  estrella.className = "estrella";
-  estrella.innerHTML = "✨";
-  estrella.style.left = Math.random() * 100 + "vw";
-  estrella.style.fontSize = (Math.random() * 10 + 10) + "px";
-  document.body.appendChild(estrella);
-  setTimeout(() => estrella.remove(), 6000);
-}, 600);
-</script>
-
-</body>
-</html>
-
-
-
-
-
-
-
-
