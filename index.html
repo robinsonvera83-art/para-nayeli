@@ -3,21 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Para Mi Nayeli 💛</title>
+<title>Para Mi Amor 💛</title>
 
 <style>
 body{
   margin:0;
   height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
   background:linear-gradient(135deg,#ffe29f,#facc15);
   font-family:Arial,sans-serif;
   overflow:hidden;
 }
 
 .card{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
   background:white;
   padding:25px;
   border-radius:20px;
@@ -27,8 +28,6 @@ body{
   box-shadow:0 15px 35px rgba(0,0,0,.2);
   z-index:2;
 }
-
-h1{ color:#f59e0b; }
 
 #texto{
   font-size:15px;
@@ -103,7 +102,6 @@ button{
   position:fixed;
   width:8px;
   height:8px;
-  background:red;
   border-radius:50%;
   animation:explosion 1s forwards;
 }
@@ -122,12 +120,11 @@ button{
   align-items:center;
   justify-content:center;
   text-align:center;
-  background:linear-gradient(135deg,#ffe29f,#facc15);
   color:white;
   font-size:1.6rem;
   font-weight:bold;
   padding:20px;
-  z-index:20;
+  z-index:5;
 }
 </style>
 </head>
@@ -137,25 +134,25 @@ button{
 <audio id="musica" src="mi_corazon_encantado.mp3"></audio>
 
 <div class="card" id="card">
-  <h1>💛 Para Nayeli 💛</h1>
+  <h2>💛 Para Ti 💛</h2>
   <img src="michi.png" width="90"><br>
   <div id="texto"></div>
 </div>
 
 <script>
-const texto=document.getElementById("texto");
-const musica=document.getElementById("musica");
-const mensaje=`Me encariñé tan rápido contigo porque fuiste la única persona
-que me hizo sentir que yo valía algo,
-después de tanto tiempo sintiéndome como nada.
+const texto = document.getElementById("texto");
+const musica = document.getElementById("musica");
+const card = document.getElementById("card");
 
-Llegaste cuando más perdido estaba
-y me devolviste la sonrisa y las ganas de creer en mí.
+const mensaje = `Me encariñé contigo tan rápido
+porque llegaste cuando me sentía vacío.
 
-Por eso te llevo en el corazón.
-TE AMO CON TODO MI SER 💖
+Me hiciste sentir importante,
+me devolviste la sonrisa
+y las ganas de seguir.
 
-Gracias por existir.`;
+Gracias por existir.
+Te amo con todo mi corazón 💖`;
 
 let i=0;
 
@@ -165,8 +162,8 @@ document.body.addEventListener("click",()=>{
 },{once:true});
 
 function escribir(){
-  if(i<mensaje.length){
-    texto.innerHTML+=mensaje[i++];
+  if(i < mensaje.length){
+    texto.innerHTML += mensaje[i++];
     setTimeout(escribir,40);
   }else{
     setTimeout(conteo,2000);
@@ -208,15 +205,18 @@ function preguntar(){
 }
 
 function aceptar(){
-  document.body.innerHTML="";
-  lanzarFuegos();
-  document.body.innerHTML+=`
-  <div class="final">
+  card.remove();
+  document.querySelectorAll(".pregunta").forEach(p=>p.remove());
+
+  const final=document.createElement("div");
+  final.className="final";
+  final.innerHTML=`
     Te amo mi niña linda 💛<br><br>
     Gracias a ti mis días se han vuelto muy alegres.<br>
-    Todo esto es por ti y para ti.<br><br>
-    <span style="font-size:1.2rem;">Siempre contigo 💖</span>
-  </div>`;
+    Todo esto es por ti y para ti 💖`;
+  document.body.appendChild(final);
+
+  lanzarFuegos();
   setInterval(corazon,300);
 }
 
@@ -231,14 +231,14 @@ function corazon(){
 }
 
 function lanzarFuegos(){
-  for(let i=0;i<40;i++){
+  for(let i=0;i<50;i++){
     const f=document.createElement("div");
     f.className="fuego";
     f.style.left="50%";
     f.style.top="50%";
-    f.style.setProperty("--x",(Math.random()*400-200)+"px");
-    f.style.setProperty("--y",(Math.random()*400-200)+"px");
     f.style.background=`hsl(${Math.random()*360},100%,50%)`;
+    f.style.setProperty("--x",(Math.random()*500-250)+"px");
+    f.style.setProperty("--y",(Math.random()*500-250)+"px");
     document.body.appendChild(f);
     setTimeout(()=>f.remove(),1000);
   }
