@@ -17,7 +17,6 @@ body{
   font-family:Arial,sans-serif;
 }
 
-/* CARD */
 .card{
   background:#fffdf6;
   width:90%;
@@ -32,7 +31,6 @@ body{
 h1{color:#f8b500}
 #texto{color:#444;line-height:1.6}
 
-/* BOTONES */
 button{
   margin-top:15px;
   padding:12px 22px;
@@ -41,21 +39,21 @@ button{
   background:#f8b500;
   color:white;
   font-size:1rem;
+  cursor:pointer;
 }
 
-/* CORAZONES */
+/* corazones */
 .corazon{
   position:fixed;
   font-size:18px;
   animation:flotar 6s linear infinite;
-  opacity:.8;
 }
 @keyframes flotar{
   from{transform:translateY(100vh)}
   to{transform:translateY(-10vh)}
 }
 
-/* TE AMO FLOTANDO */
+/* TE AMO flotando */
 .teamo{
   position:fixed;
   color:#ff5fa2;
@@ -67,7 +65,7 @@ button{
   to{transform:translateY(-20vh)}
 }
 
-/* CONTEO */
+/* contador */
 #contador{
   font-size:3rem;
   color:#f8b500;
@@ -81,7 +79,7 @@ button{
   100%{transform:translateX(0)}
 }
 
-/* TEXTO CENTRAL FINAL */
+/* final */
 .amo-central{
   position:fixed;
   top:35%;
@@ -94,7 +92,6 @@ button{
   text-shadow:0 0 10px black;
 }
 
-/* ANILLO */
 .anillo{
   position:fixed;
   top:42%;
@@ -108,7 +105,6 @@ button{
   to{transform:translate(-50%,-50%) rotate(360deg)}
 }
 
-/* CORAZON GRANDE */
 .corazon-grande{
   position:fixed;
   top:45%;
@@ -127,14 +123,15 @@ button{
 
 <body>
 
-<audio id="musica" loop>
+<!-- 🎵 AUDIO -->
+<audio id="musica" preload="auto" loop>
   <source src="mi_corazon_encantado.mp3" type="audio/mpeg">
 </audio>
 
 <div class="card" id="card">
   <h1>Para Nayeli 💛</h1>
   <div id="texto"></div>
-  <button onclick="iniciar()">▶ Leer mensaje</button>
+  <button id="btn" onclick="iniciar()">▶ Leer mensaje</button>
 </div>
 
 <script>
@@ -148,26 +145,36 @@ const mensaje=[
 ];
 
 let l=0,c=0;
+let iniciado=false;
 
 function iniciar(){
- document.getElementById("musica").play();
- escribir();
- setInterval(crearCorazon,600);
- setInterval(crearTeAmo,900);
+  if(iniciado) return;
+  iniciado=true;
+
+  const audio=document.getElementById("musica");
+  audio.volume=1;
+  audio.play().catch(()=>{
+    alert("Toca otra vez el botón para activar la música 💛");
+  });
+
+  document.getElementById("btn").style.display="none";
+  escribir();
+  setInterval(crearCorazon,700);
+  setInterval(crearTeAmo,1000);
 }
 
 function escribir(){
  if(l<mensaje.length){
   if(c<mensaje[l].length){
    texto.innerHTML+=mensaje[l][c++];
-   setTimeout(escribir,60);
+   setTimeout(escribir,55);
   }else{
    texto.innerHTML+="<br>";
    l++;c=0;
-   setTimeout(escribir,400);
+   setTimeout(escribir,350);
   }
  }else{
-  setTimeout(conteo,1000);
+  setTimeout(conteo,5000); // ⏱️ tiempo para leer
  }
 }
 
