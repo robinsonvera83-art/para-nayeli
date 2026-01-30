@@ -9,175 +9,117 @@
 body{
   margin:0;
   height:100vh;
-  background:linear-gradient(135deg,#ffe29f,#facc15);
-  font-family:Arial,sans-serif;
   overflow:hidden;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(135deg,#fceabb,#f8b500);
+  font-family:Arial,sans-serif;
 }
 
-/* TARJETA */
+/* CARD */
 .card{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  background:white;
+  background:#fffdf6;
+  width:90%;
+  max-width:500px;
   padding:25px;
   border-radius:20px;
-  width:85%;
-  max-width:420px;
   text-align:center;
-  box-shadow:0 15px 35px rgba(0,0,0,.2);
-  z-index:2;
+  box-shadow:0 20px 40px rgba(0,0,0,.2);
+  z-index:5;
 }
 
-#texto{
-  font-size:15px;
-  color:#444;
-  white-space:pre-line;
-  margin-top:15px;
-}
+h1{color:#f8b500}
+#texto{color:#444;line-height:1.6}
 
-/* OVERLAY */
-.pregunta{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.6);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  z-index:10;
-}
-
-.pregunta-card{
-  background:white;
-  padding:30px;
-  border-radius:20px;
-  text-align:center;
-  width:80%;
-  max-width:300px;
-}
-
-/* BOTÓN */
+/* BOTONES */
 button{
-  padding:12px 25px;
+  margin-top:15px;
+  padding:12px 22px;
   border:none;
   border-radius:25px;
-  background:#facc15;
-  font-size:18px;
-  cursor:pointer;
-}
-
-.btn-si{
-  animation:latido 1.5s infinite;
-}
-
-@keyframes latido{
-  0%{transform:scale(1)}
-  50%{transform:scale(1.15)}
-  100%{transform:scale(1)}
-}
-
-/* CONTADOR */
-#contador{
-  font-size:55px;
-  animation:temblar .25s infinite;
-}
-
-@keyframes temblar{
-  0%{transform:translate(0)}
-  25%{transform:translate(-4px,4px)}
-  50%{transform:translate(4px,-4px)}
-  75%{transform:translate(-4px,-4px)}
-  100%{transform:translate(0)}
-}
-
-/* FLOTANTES */
-.flotar{
-  position:fixed;
-  bottom:-30px;
-  animation:subir 5s linear forwards;
-  pointer-events:none;
-}
-
-@keyframes subir{
-  to{ transform:translateY(-110vh); opacity:0; }
-}
-
-.texto-amo{
-  color:#ff2f6d;
-  font-weight:bold;
-  text-shadow:0 0 6px rgba(0,0,0,.35);
-}
-
-.temblar-texto{
-  animation:temblar .3s infinite;
-}
-
-/* FINAL */
-.final{
-  position:fixed;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
+  background:#f8b500;
   color:white;
-  font-size:1.6rem;
-  font-weight:bold;
-  padding:20px;
-  z-index:5;
+  font-size:1rem;
+}
+
+/* CORAZONES */
+.corazon{
+  position:fixed;
+  font-size:18px;
+  animation:flotar 6s linear infinite;
+  opacity:.8;
+}
+@keyframes flotar{
+  from{transform:translateY(100vh)}
+  to{transform:translateY(-10vh)}
+}
+
+/* TE AMO FLOTANDO */
+.teamo{
+  position:fixed;
+  color:#ff5fa2;
+  font-size:14px;
+  animation:flotarTexto 8s linear infinite;
+}
+@keyframes flotarTexto{
+  from{transform:translateY(110vh)}
+  to{transform:translateY(-20vh)}
+}
+
+/* CONTEO */
+#contador{
+  font-size:3rem;
+  color:#f8b500;
+  animation:temblar .4s infinite;
+}
+@keyframes temblar{
+  0%{transform:translateX(0)}
+  25%{transform:translateX(-3px)}
+  50%{transform:translateX(3px)}
+  75%{transform:translateX(-3px)}
+  100%{transform:translateX(0)}
+}
+
+/* TEXTO CENTRAL FINAL */
+.amo-central{
+  position:fixed;
+  top:35%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  text-align:center;
+  z-index:10;
+  color:white;
+  font-size:1.8rem;
+  text-shadow:0 0 10px black;
 }
 
 /* ANILLO */
 .anillo{
   position:fixed;
-  top:50%;
+  top:42%;
   left:50%;
+  transform:translate(-50%,-50%);
   font-size:60px;
   animation:giro 3s linear infinite;
-  z-index:6;
 }
-
 @keyframes giro{
-  from{transform:translate(-50%,-50%) rotate(0deg)}
+  from{transform:translate(-50%,-50%) rotate(0)}
   to{transform:translate(-50%,-50%) rotate(360deg)}
 }
 
-/* FUEGOS */
-.fuego{
+/* CORAZON GRANDE */
+.corazon-grande{
   position:fixed;
-  width:6px;
-  height:6px;
-  border-radius:50%;
-  animation:explota 1s forwards;
-}
-
-@keyframes explota{
-  to{
-    transform:translate(var(--x),var(--y));
-    opacity:0;
-  }
-}
-
-/* TE AMO CENTRAL */
-.amo-central{
-  position:fixed;
-  top:50%;
+  top:45%;
   left:50%;
-  transform:translate(-50%,-50%) scale(0);
-  font-size:2.4rem;
-  font-weight:bold;
-  color:#ff2f6d;
-  text-shadow:0 0 14px rgba(255,47,109,.8);
-  animation:aparecerLatir 3s forwards;
-  z-index:8;
+  transform:translate(-50%,-50%);
+  font-size:90px;
+  animation:latir 2s infinite;
 }
-
-@keyframes aparecerLatir{
-  0%{transform:translate(-50%,-50%) scale(0);opacity:0}
-  40%{transform:translate(-50%,-50%) scale(1.2);opacity:1}
-  60%{transform:translate(-50%,-50%) scale(1)}
-  80%{transform:translate(-50%,-50%) scale(1.15)}
+@keyframes latir{
+  0%{transform:translate(-50%,-50%) scale(1)}
+  50%{transform:translate(-50%,-50%) scale(1.2)}
   100%{transform:translate(-50%,-50%) scale(1)}
 }
 </style>
@@ -185,134 +127,107 @@ button{
 
 <body>
 
+<audio id="musica" loop>
+  <source src="mi_corazon_encantado.mp3" type="audio/mpeg">
+</audio>
+
 <div class="card" id="card">
-  <h2>💛 Para Nayeli 💛</h2>
-  <img src="michi.png" width="90"><br>
+  <h1>Para Nayeli 💛</h1>
   <div id="texto"></div>
+  <button onclick="iniciar()">▶ Leer mensaje</button>
 </div>
 
 <script>
-const texto=document.getElementById("texto");
-const card=document.getElementById("card");
+const mensaje=[
+"Me encariñé tan rápido contigo porque fuiste la única persona",
+"que me hizo sentir que yo valía algo.",
+"Llegaste cuando más perdido estaba",
+"y me devolviste la sonrisa.",
+"Por eso te llevo en el corazón.",
+"TE AMO CON TODO MI SER 💖"
+];
 
-const mensaje=`Me encariñé contigo tan rápido
-porque llegaste cuando me sentía vacío.
+let l=0,c=0;
 
-Me hiciste sentir importante,
-me devolviste la sonrisa
-y las ganas de seguir.
-
-Gracias por existir.
-Te amo con todo mi corazón 💖`;
-
-let i=0;
-document.body.addEventListener("click",escribir,{once:true});
+function iniciar(){
+ document.getElementById("musica").play();
+ escribir();
+ setInterval(crearCorazon,600);
+ setInterval(crearTeAmo,900);
+}
 
 function escribir(){
-  if(i<mensaje.length){
-    texto.innerHTML+=mensaje[i++];
-    setTimeout(escribir,40);
+ if(l<mensaje.length){
+  if(c<mensaje[l].length){
+   texto.innerHTML+=mensaje[l][c++];
+   setTimeout(escribir,60);
   }else{
-    setTimeout(conteo,5000);
+   texto.innerHTML+="<br>";
+   l++;c=0;
+   setTimeout(escribir,400);
   }
+ }else{
+  setTimeout(conteo,1000);
+ }
 }
 
 function conteo(){
-  let s=10;
-  const o=document.createElement("div");
-  o.className="pregunta";
-  o.innerHTML=`
-    <div class="pregunta-card">
-      <h2 id="contador">💛 ${s}</h2>
-      <p>Prepárate...</p>
-    </div>`;
-  document.body.appendChild(o);
-
-  const c=o.querySelector("#contador");
-  const t=setInterval(()=>{
-    s--;
-    c.innerHTML="💛 "+s;
-    if(s<=0){
-      clearInterval(t);
-      o.remove();
-      preguntar();
-    }
-  },1000);
+ texto.innerHTML="<div id='contador'>10</div>";
+ let t=10;
+ let i=setInterval(()=>{
+  t--;
+  contador.textContent=t;
+  if(t===0){
+   clearInterval(i);
+   preguntar();
+  }
+ },1000);
 }
 
 function preguntar(){
-  const o=document.createElement("div");
-  o.className="pregunta";
-  o.innerHTML=`
-    <div class="pregunta-card">
-      <h2>💍 ¿Quieres ser mi novia?</h2>
-      <button class="btn-si" onclick="aceptar()">Sí 💖</button>
-    </div>`;
-  document.body.appendChild(o);
+ texto.innerHTML="<h2>¿Quieres ser mi novia? 💛</h2><button onclick='aceptar()'>SÍ</button>";
 }
 
 function aceptar(){
-  card.remove();
-  document.querySelectorAll(".pregunta").forEach(p=>p.remove());
-
-  const final=document.createElement("div");
-  final.className="final";
-  final.innerHTML=`
-    Te amo mi niña linda 💛<br><br>
-    Gracias a ti mis días se han vuelto muy alegres.<br>
-    Todo esto es por ti y para ti 💖`;
-  document.body.appendChild(final);
-
-  const anillo=document.createElement("div");
-  anillo.className="anillo";
-  anillo.innerHTML="💍";
-  document.body.appendChild(anillo);
-
-  lanzarFuegos();
-  setInterval(crearFlotantes,250);
-  amoCentral();
+ document.getElementById("card").remove();
+ final();
 }
 
-function crearFlotantes(){
-  const e=document.createElement("div");
-  e.className="flotar";
-  const opciones=[
-    "💖",
-    "💛",
-    "<span class='texto-amo temblar-texto'>TE AMO</span>",
-    "<span class='texto-amo temblar-texto'>TE AMO NAYELI</span>",
-    "<span class='texto-amo temblar-texto'>PARA SIEMPRE 💍</span>"
-  ];
-  e.innerHTML=opciones[Math.floor(Math.random()*opciones.length)];
-  e.style.left=Math.random()*100+"vw";
-  e.style.fontSize=18+Math.random()*22+"px";
-  document.body.appendChild(e);
-  setTimeout(()=>e.remove(),5000);
+function final(){
+ let t=document.createElement("div");
+ t.className="amo-central";
+ t.innerHTML="TE AMO NAYELI 💛<br>Te amo mi niña linda.<br>Gracias a ti mis días son más alegres.";
+ document.body.appendChild(t);
+
+ let a=document.createElement("div");
+ a.className="anillo";
+ a.innerHTML="💍";
+ document.body.appendChild(a);
+
+ let c=document.createElement("div");
+ c.className="corazon-grande";
+ c.innerHTML="💖";
+ document.body.appendChild(c);
 }
 
-function lanzarFuegos(){
-  for(let i=0;i<70;i++){
-    const f=document.createElement("div");
-    f.className="fuego";
-    f.style.left="50%";
-    f.style.top="50%";
-    f.style.background=`hsl(${Math.random()*360},100%,50%)`;
-    f.style.setProperty("--x",(Math.random()*700-350)+"px");
-    f.style.setProperty("--y",(Math.random()*700-350)+"px");
-    document.body.appendChild(f);
-    setTimeout(()=>f.remove(),1000);
-  }
+function crearCorazon(){
+ let c=document.createElement("div");
+ c.className="corazon";
+ c.innerHTML="💛";
+ c.style.left=Math.random()*100+"vw";
+ document.body.appendChild(c);
+ setTimeout(()=>c.remove(),6000);
 }
 
-function amoCentral(){
-  const t=document.createElement("div");
-  t.className="amo-central";
-  t.innerHTML="TE AMO NAYELI 💖";
-  document.body.appendChild(t);
-  setTimeout(()=>t.remove(),6000);
+function crearTeAmo(){
+ let t=document.createElement("div");
+ t.className="teamo";
+ t.innerHTML="TE AMO";
+ t.style.left=Math.random()*100+"vw";
+ document.body.appendChild(t);
+ setTimeout(()=>t.remove(),8000);
 }
 </script>
 
 </body>
 </html>
-
