@@ -15,8 +15,10 @@ body{
   align-items:center;
   background:linear-gradient(135deg,#fceabb,#f8b500);
   font-family:Arial,sans-serif;
+  transition:background 2s;
 }
 
+/* CARD */
 .card{
   background:#fffdf6;
   width:90%;
@@ -42,30 +44,43 @@ button{
   cursor:pointer;
 }
 
-/* corazones */
+/* BOTÓN SÍ VIBRA */
+.vibrar{
+  animation:vibrar .4s infinite;
+}
+@keyframes vibrar{
+  0%{transform:translateX(0)}
+  25%{transform:translateX(-2px)}
+  50%{transform:translateX(2px)}
+  75%{transform:translateX(-2px)}
+  100%{transform:translateX(0)}
+}
+
+/* CORAZONES */
 .corazon{
   position:fixed;
   font-size:18px;
-  animation:flotar 6s linear infinite;
+  animation:flotar 7s linear infinite;
+  opacity:.8;
 }
 @keyframes flotar{
-  from{transform:translateY(100vh)}
-  to{transform:translateY(-10vh)}
+  from{transform:translateY(110vh)}
+  to{transform:translateY(-40vh)}
 }
 
-/* TE AMO flotando */
+/* TE AMO */
 .teamo{
   position:fixed;
   color:#ff5fa2;
   font-size:14px;
-  animation:flotarTexto 8s linear infinite;
+  animation:flotarTexto 9s linear infinite;
 }
 @keyframes flotarTexto{
-  from{transform:translateY(110vh)}
-  to{transform:translateY(-20vh)}
+  from{transform:translateY(120vh)}
+  to{transform:translateY(-50vh)}
 }
 
-/* contador */
+/* CONTADOR */
 #contador{
   font-size:3rem;
   color:#f8b500;
@@ -79,22 +94,33 @@ button{
   100%{transform:translateX(0)}
 }
 
-/* final */
+/* FINAL */
 .amo-central{
   position:fixed;
-  top:35%;
+  top:30%;
   left:50%;
   transform:translate(-50%,-50%);
   text-align:center;
   z-index:10;
   color:white;
   font-size:1.8rem;
-  text-shadow:0 0 10px black;
+  text-shadow:0 0 12px #ffb6ff;
 }
 
+/* BRILLO */
+.brillo{
+  animation:brillar 2s infinite;
+}
+@keyframes brillar{
+  0%{text-shadow:0 0 10px #fff}
+  50%{text-shadow:0 0 25px #ff9}
+  100%{text-shadow:0 0 10px #fff}
+}
+
+/* ANILLO */
 .anillo{
   position:fixed;
-  top:42%;
+  top:38%;
   left:50%;
   transform:translate(-50%,-50%);
   font-size:60px;
@@ -105,9 +131,10 @@ button{
   to{transform:translate(-50%,-50%) rotate(360deg)}
 }
 
+/* CORAZÓN GRANDE */
 .corazon-grande{
   position:fixed;
-  top:45%;
+  top:55%;
   left:50%;
   transform:translate(-50%,-50%);
   font-size:90px;
@@ -118,12 +145,23 @@ button{
   50%{transform:translate(-50%,-50%) scale(1.2)}
   100%{transform:translate(-50%,-50%) scale(1)}
 }
+
+/* FUEGOS */
+.fuego{
+  position:fixed;
+  font-size:25px;
+  animation:explota 2s ease-out forwards;
+}
+@keyframes explota{
+  0%{transform:scale(0)}
+  50%{transform:scale(1.5)}
+  100%{transform:scale(0);opacity:0}
+}
 </style>
 </head>
 
 <body>
 
-<!-- 🎵 AUDIO -->
 <audio id="musica" preload="auto" loop>
   <source src="mi_corazon_encantado.mp3" type="audio/mpeg">
 </audio>
@@ -144,23 +182,16 @@ const mensaje=[
 "TE AMO CON TODO MI SER 💖"
 ];
 
-let l=0,c=0;
-let iniciado=false;
+let l=0,c=0,iniciado=false;
 
 function iniciar(){
-  if(iniciado) return;
-  iniciado=true;
-
-  const audio=document.getElementById("musica");
-  audio.volume=1;
-  audio.play().catch(()=>{
-    alert("Toca otra vez el botón para activar la música 💛");
-  });
-
-  document.getElementById("btn").style.display="none";
-  escribir();
-  setInterval(crearCorazon,700);
-  setInterval(crearTeAmo,1000);
+ if(iniciado) return;
+ iniciado=true;
+ musica.play();
+ btn.style.display="none";
+ escribir();
+ setInterval(crearCorazon,700);
+ setInterval(crearTeAmo,1000);
 }
 
 function escribir(){
@@ -174,37 +205,45 @@ function escribir(){
    setTimeout(escribir,350);
   }
  }else{
-  setTimeout(conteo,5000); // ⏱️ tiempo para leer
+  setTimeout(conteo,5000);
  }
 }
 
 function conteo(){
- texto.innerHTML="<div id='contador'>10</div>";
- let t=10;
+ texto.innerHTML=`<div>✨ Sorpresa ✨</div><div id="contador">20</div>`;
+ let t=20;
  let i=setInterval(()=>{
-  t--;
-  contador.textContent=t;
-  if(t===0){
-   clearInterval(i);
-   preguntar();
-  }
+  t--;contador.textContent=t;
+  if(t===0){clearInterval(i);preguntar();}
  },1000);
 }
 
 function preguntar(){
- texto.innerHTML="<h2>¿Quieres ser mi novia? 💛</h2><button onclick='aceptar()'>SÍ</button>";
+ texto.innerHTML=`<h2>¿Quieres ser mi novia? 💛</h2>
+ <button class="vibrar" onclick="aceptar()">SÍ</button>`;
 }
 
 function aceptar(){
- document.getElementById("card").remove();
- final();
+ card.remove();
+ finalRomantico();
 }
 
-function final(){
- let t=document.createElement("div");
- t.className="amo-central";
- t.innerHTML="TE AMO NAYELI 💛<br>Te amo mi niña linda.<br>Gracias a ti mis días son más alegres.";
- document.body.appendChild(t);
+function finalRomantico(){
+ document.body.style.background="linear-gradient(135deg,#0f2027,#203a43,#2c5364)";
+ escribirFinal("TE AMO NAYELI 💛\nPara siempre 💍");
+ crearFuegos();
+}
+
+function escribirFinal(txt){
+ let d=document.createElement("div");
+ d.className="amo-central brillo";
+ document.body.appendChild(d);
+ let i=0;
+ let inter=setInterval(()=>{
+  d.innerHTML+=txt[i]==="\n"?"<br>":txt[i];
+  i++;
+  if(i>=txt.length)clearInterval(inter);
+ },80);
 
  let a=document.createElement("div");
  a.className="anillo";
@@ -217,13 +256,25 @@ function final(){
  document.body.appendChild(c);
 }
 
+function crearFuegos(){
+ setInterval(()=>{
+  let f=document.createElement("div");
+  f.className="fuego";
+  f.innerHTML="🎆";
+  f.style.left=Math.random()*100+"vw";
+  f.style.top=Math.random()*60+"vh";
+  document.body.appendChild(f);
+  setTimeout(()=>f.remove(),2000);
+ },400);
+}
+
 function crearCorazon(){
  let c=document.createElement("div");
  c.className="corazon";
  c.innerHTML="💛";
  c.style.left=Math.random()*100+"vw";
  document.body.appendChild(c);
- setTimeout(()=>c.remove(),6000);
+ setTimeout(()=>c.remove(),7000);
 }
 
 function crearTeAmo(){
@@ -232,7 +283,7 @@ function crearTeAmo(){
  t.innerHTML="TE AMO";
  t.style.left=Math.random()*100+"vw";
  document.body.appendChild(t);
- setTimeout(()=>t.remove(),8000);
+ setTimeout(()=>t.remove(),9000);
 }
 </script>
 
