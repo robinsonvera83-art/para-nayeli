@@ -1,118 +1,215 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Para Mi Nayeli 💛</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para Mi Nayeli 💛</title>
 
-  <style>
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, #fceabb, #f8b500);
-      font-family: Arial, sans-serif;
-      overflow: hidden;
-    }
+<style>
+body{
+  margin:0;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(135deg,#fceabb,#f8b500);
+  font-family:Arial,sans-serif;
+  overflow:hidden;
+}
 
-    .estrella {
-      position: absolute;
-      color: #fff;
-      opacity: 0.8;
-      animation: caer 6s linear infinite;
-    }
+.card{
+  background:rgba(255,255,255,.95);
+  width:90%;
+  max-width:520px;
+  padding:25px 20px;
+  border-radius:20px;
+  box-shadow:0 20px 40px rgba(0,0,0,.15);
+  text-align:center;
+  z-index:2;
+}
 
-    @keyframes caer {
-      from { transform: translateY(-10vh); }
-      to { transform: translateY(110vh); opacity: 0; }
-    }
+h1{color:#f8b500;font-size:1.9rem;}
+.corazon{font-size:1.8rem;animation:latir 1.5s infinite;}
+@keyframes latir{50%{transform:scale(1.15)}}
 
-    .card {
-      background: rgba(255, 255, 255, 0.95);
-      width: 90%;
-      max-width: 520px;
-      max-height: 85vh;          /* 🔑 evita que se salga */
-      padding: 25px 20px;
-      border-radius: 20px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-      text-align: center;
-      z-index: 2;
-      overflow-y: auto;          /* 🔑 scroll interno */
-    }
+.michi{width:150px;max-width:60%;margin:15px auto;display:block;}
 
-    h1 {
-      color: #f8b500;
-      margin: 10px 0;
-      font-size: 1.9rem;
-    }
+#texto{color:#444;line-height:1.6;font-size:1rem;min-height:120px;}
 
-    .corazon {
-      font-size: 1.8rem;
-      animation: latir 1.5s infinite;
-    }
+button{
+  margin-top:15px;
+  padding:12px 22px;
+  border:none;
+  border-radius:25px;
+  background:#f8b500;
+  color:white;
+  font-size:1rem;
+  cursor:pointer;
+}
 
-    @keyframes latir {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.15); }
-      100% { transform: scale(1); }
-    }
+.firma{
+  margin-top:20px;
+  font-weight:bold;
+  color:#f8b500;
+  opacity:0;
+  transition:1s;
+}
 
-    .michi {
-      width: 150px;
-      max-width: 60%;
-      margin: 15px auto;
-      display: block;
-    }
+.corazon-flotante{
+  position:absolute;
+  animation:caer 6s linear infinite;
+  pointer-events:none;
+}
+@keyframes caer{
+  from{transform:translateY(-10vh);opacity:1}
+  to{transform:translateY(110vh);opacity:0}
+}
 
-    #texto {
-      color: #444;
-      line-height: 1.6;
-      font-size: 1rem;
-      margin-top: 10px;
-    }
+.te-amo{
+  position:absolute;
+  color:#ff4081;
+  font-weight:bold;
+  animation:flotar 3s forwards;
+}
+@keyframes flotar{
+  to{transform:translateY(-120px);opacity:0}
+}
 
-    button {
-      margin-top: 15px;
-      padding: 12px 22px;
-      border: none;
-      border-radius: 25px;
-      background: #f8b500;
-      color: white;
-      font-size: 1rem;
-      cursor: pointer;
-    }
+.pregunta{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:10;
+}
 
-    .firma {
-      margin-top: 25px;
-      font-weight: bold;
-      color: #f8b500;
-      font-size: 1.05rem;
-      opacity: 0;
-      transition: opacity 1s;
-    }
-  </style>
+.pregunta-card{
+  background:white;
+  padding:30px;
+  border-radius:20px;
+  text-align:center;
+  animation:zoom 1s;
+}
+@keyframes zoom{
+  from{transform:scale(.5);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
+
+.pregunta-card h2{
+  color:#f8b500;
+  margin-bottom:20px;
+}
+
+.pregunta-card button{
+  margin:10px;
+  padding:10px 20px;
+  font-size:1rem;
+}
+</style>
 </head>
 
 <body>
 
-  <!-- 🎵 MÚSICA -->
-  <audio id="musica" loop>
-    <source src="mi_corazon_encantado.mp3" type="audio/mpeg">
-  </audio>
+<audio id="musica" loop>
+  <source src="mi_corazon_encantado.mp3" type="audio/mpeg">
+</audio>
 
-  <div class="card">
-    <div class="corazon">💛</div>
-    <h1>Para Nayeli</h1>
+<div class="card">
+  <div class="corazon">💛</div>
+  <h1>Para Nayeli</h1>
+  <img src="michi.png" class="michi">
 
-    <!-- 🐱 MICHI -->
-    <img src="michi.png" alt="Michi con flores" class="michi">
+  <div id="texto"></div>
+  <button onclick="iniciar(this)">▶ Leer mensaje</button>
 
-    <div id="texto"></div>
+  <div class="firma" id="firma">
+    Con cariño,<br>tu niño Robin 💛
+  </div>
+</div>
 
-    <button onclick="iniciar()">▶ Leer mensaje</button>
+<script>
+const mensaje=[
+"Me encariñé tan rápido contigo porque fuiste la única persona",
+"que me hizo sentir que yo valía algo,",
+"después de tanto tiempo sintiéndome como nada.",
+"Llegaste cuando más perdido estaba",
+"y me devolviste la sonrisa y las ganas de creer en mí.",
+"Por eso te llevo en el corazón.",
+"TE AMO CON TODO MI SER 💖."
+];
 
+let l=0,c=0,iniciado=false;
+
+function iniciar(btn){
+ if(iniciado)return;
+ iniciado=true;
+ btn.style.display="none";
+ musica.play().catch(()=>{});
+ escribir();
+}
+
+function escribir(){
+ if(l<mensaje.length){
+  if(c<mensaje[l].length){
+   texto.innerHTML+=mensaje[l][c++];
+   setTimeout(escribir,65);
+  }else{
+   texto.innerHTML+="<br>";
+   l++; c=0;
+   setTimeout(escribir,350);
+  }
+ }else{
+  texto.innerHTML+="<br><br><strong>Gracias por existir.</strong>";
+  firma.style.opacity=1;
+  finalRomantico();
+ }
+}
+
+function finalRomantico(){
+ setInterval(()=>{
+  const h=document.createElement("div");
+  h.className="corazon-flotante";
+  h.innerHTML=Math.random()>0.5?"💖":"💛";
+  h.style.left=Math.random()*100+"vw";
+  h.style.fontSize=Math.random()*20+15+"px";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),6000);
+ },300);
+
+ setInterval(()=>{
+  const t=document.createElement("div");
+  t.className="te-amo";
+  t.innerText="TE AMO 💖";
+  t.style.left=Math.random()*80+"vw";
+  t.style.top=Math.random()*80+"vh";
+  document.body.appendChild(t);
+  setTimeout(()=>t.remove(),3000);
+ },500);
+
+ setTimeout(preguntar,4000);
+}
+
+function preguntar(){
+ const div=document.createElement("div");
+ div.className="pregunta";
+ div.innerHTML=`
+  <div class="pregunta-card">
+    <h2>¿Quieres ser mi novia? 💍💛</h2>
+    <button onclick="acepto()">Sí 💖</button>
+    <button onclick="acepto()">Claro que sí 😍</button>
+  </div>`;
+ document.body.appendChild(div);
+}
+
+function acepto(){
+ alert("Gracias por hacerme el más feliz del mundo 💖");
+}
+</script>
+
+</body>
+</html>
     <div class="firma" id="firma">
       Con cariño,<br>
       tu niño Robin 💛
@@ -182,6 +279,7 @@ setInterval(() => {
 
 </body>
 </html>
+
 
 
 
