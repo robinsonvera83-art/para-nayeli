@@ -48,6 +48,7 @@ button{
   cursor:pointer;
 }
 
+/* BOTÓN SÍ */
 .vibrar{animation:vibrar .4s infinite}
 @keyframes vibrar{
   0%{transform:translateX(0)}
@@ -94,7 +95,7 @@ button{
   100%{transform:translateX(0)}
 }
 
-/* FINAL */
+/* TEXTO FINAL */
 .amo-central{
   position:fixed;
   top:25%;
@@ -105,6 +106,13 @@ button{
   font-size:1.8rem;
   text-shadow:0 0 16px #ffb6ff;
   z-index:10;
+  opacity:0;
+  animation:aparecer 2s forwards;
+}
+
+@keyframes aparecer{
+  from{opacity:0; transform:translate(-50%,-60%)}
+  to{opacity:1; transform:translate(-50%,-50%)}
 }
 
 .corazon-grande{
@@ -149,7 +157,7 @@ button{
 <div class="card" id="card">
   <h1>Para Nayeli 💖</h1>
   <div id="texto"></div>
-  <button onclick="iniciar()">▶ Leer mensaje</button>
+  <button id="btnLeer" onclick="iniciar()">▶ Leer mensaje</button>
 </div>
 
 <script>
@@ -165,6 +173,7 @@ const mensaje=[
 let l=0,c=0;
 
 function iniciar(){
+ document.getElementById("btnLeer").style.display="none"; // 👈 DESAPARECE
  musicaInicio.play();
  escribir();
  setInterval(crearEmoji,600);
@@ -209,8 +218,29 @@ function aceptar(){
 function mostrarFinal(){
  let d=document.createElement("div");
  d.className="amo-central";
- d.innerHTML="TE AMO MI NIÑA LINDA 💖<br>Gracias a ti mis días son más alegres<br>Todo esto es por ti";
  document.body.appendChild(d);
+
+ const textoFinal=[
+  "TE AMO MI NIÑA LINDA 💖",
+  "Gracias a ti mis días son más alegres",
+  "Todo esto es por ti"
+ ];
+
+ let i=0,j=0;
+
+ function escribirFinal(){
+  if(i<textoFinal.length){
+   if(j<textoFinal[i].length){
+    d.innerHTML+=textoFinal[i][j++];
+    setTimeout(escribirFinal,70);
+   }else{
+    d.innerHTML+="<br>";
+    i++;j=0;
+    setTimeout(escribirFinal,500);
+   }
+  }
+ }
+ escribirFinal();
 
  let cor=document.createElement("div");
  cor.className="corazon-grande";
