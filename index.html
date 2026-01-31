@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Para Nayeli 💛</title>
+<title>Para Nayeli 💖</title>
 
 <style>
 body{
@@ -13,14 +13,14 @@ body{
   display:flex;
   justify-content:center;
   align-items:center;
-  background:linear-gradient(135deg,#fceabb,#f8b500);
+  background:linear-gradient(135deg,#fbc2eb,#a18cd1);
   font-family:Arial,sans-serif;
   transition:background 2s;
 }
 
 /* CARD */
 .card{
-  background:#fffdf6;
+  background:rgba(255,255,255,0.95);
   width:90%;
   max-width:500px;
   padding:25px;
@@ -30,15 +30,16 @@ body{
   z-index:5;
 }
 
-h1{color:#f8b500}
-#texto{color:#444;line-height:1.6}
+h1{color:#d63384}
+#texto{color:#444;line-height:1.7;font-size:1rem}
 
+/* BOTÓN */
 button{
   margin-top:15px;
   padding:12px 22px;
   border:none;
   border-radius:25px;
-  background:#f8b500;
+  background:#d63384;
   color:white;
   font-size:1rem;
   cursor:pointer;
@@ -59,31 +60,31 @@ button{
 /* CORAZONES */
 .corazon{
   position:fixed;
-  font-size:18px;
-  animation:flotar 7s linear infinite;
-  opacity:.8;
+  font-size:20px;
+  animation:flotar 9s linear infinite;
+  opacity:.9;
 }
 @keyframes flotar{
   from{transform:translateY(110vh)}
-  to{transform:translateY(-40vh)}
+  to{transform:translateY(-60vh)}
 }
 
 /* TE AMO */
 .teamo{
   position:fixed;
-  color:#ff5fa2;
+  color:#ff2d55;
   font-size:14px;
-  animation:flotarTexto 9s linear infinite;
+  animation:flotarTexto 10s linear infinite;
 }
 @keyframes flotarTexto{
   from{transform:translateY(120vh)}
-  to{transform:translateY(-50vh)}
+  to{transform:translateY(-60vh)}
 }
 
 /* CONTADOR */
 #contador{
   font-size:3rem;
-  color:#f8b500;
+  color:#d63384;
   animation:temblar .4s infinite;
 }
 @keyframes temblar{
@@ -97,14 +98,14 @@ button{
 /* FINAL */
 .amo-central{
   position:fixed;
-  top:30%;
+  top:25%;
   left:50%;
   transform:translate(-50%,-50%);
   text-align:center;
   z-index:10;
   color:white;
-  font-size:1.8rem;
-  text-shadow:0 0 12px #ffb6ff;
+  font-size:1.6rem;
+  text-shadow:0 0 15px #ff9ad5;
 }
 
 /* BRILLO */
@@ -113,7 +114,7 @@ button{
 }
 @keyframes brillar{
   0%{text-shadow:0 0 10px #fff}
-  50%{text-shadow:0 0 25px #ff9}
+  50%{text-shadow:0 0 30px #ff9ad5}
   100%{text-shadow:0 0 10px #fff}
 }
 
@@ -142,19 +143,19 @@ button{
 }
 @keyframes latir{
   0%{transform:translate(-50%,-50%) scale(1)}
-  50%{transform:translate(-50%,-50%) scale(1.2)}
+  50%{transform:translate(-50%,-50%) scale(1.25)}
   100%{transform:translate(-50%,-50%) scale(1)}
 }
 
 /* FUEGOS */
 .fuego{
   position:fixed;
-  font-size:25px;
+  font-size:26px;
   animation:explota 2s ease-out forwards;
 }
 @keyframes explota{
   0%{transform:scale(0)}
-  50%{transform:scale(1.5)}
+  50%{transform:scale(1.6)}
   100%{transform:scale(0);opacity:0}
 }
 </style>
@@ -167,7 +168,7 @@ button{
 </audio>
 
 <div class="card" id="card">
-  <h1>Para Nayeli 💛</h1>
+  <h1>Para Nayeli 💖</h1>
   <div id="texto"></div>
   <button id="btn" onclick="iniciar()">▶ Leer mensaje</button>
 </div>
@@ -177,9 +178,9 @@ const mensaje=[
 "Me encariñé tan rápido contigo porque fuiste la única persona",
 "que me hizo sentir que yo valía algo.",
 "Llegaste cuando más perdido estaba",
-"y me devolviste la sonrisa.",
-"Por eso te llevo en el corazón.",
-"TE AMO CON TODO MI SER 💖"
+"y me devolviste la sonrisa y la paz.",
+"Gracias por existir en mi vida.",
+"TE AMO CON TODO MI SER ❤️"
 ];
 
 let l=0,c=0,iniciado=false;
@@ -187,11 +188,11 @@ let l=0,c=0,iniciado=false;
 function iniciar(){
  if(iniciado) return;
  iniciado=true;
- musica.play();
+ musica.play().catch(()=>{});
  btn.style.display="none";
  escribir();
- setInterval(crearCorazon,700);
- setInterval(crearTeAmo,1000);
+ setInterval(crearCorazon,600);
+ setInterval(crearTeAmo,900);
 }
 
 function escribir(){
@@ -202,10 +203,10 @@ function escribir(){
   }else{
    texto.innerHTML+="<br>";
    l++;c=0;
-   setTimeout(escribir,350);
+   setTimeout(escribir,500);
   }
  }else{
-  setTimeout(conteo,5000);
+  setTimeout(conteo,6000);
  }
 }
 
@@ -219,7 +220,7 @@ function conteo(){
 }
 
 function preguntar(){
- texto.innerHTML=`<h2>¿Quieres ser mi novia? 💛</h2>
+ texto.innerHTML=`<h2>¿Quieres ser mi novia? 💖</h2>
  <button class="vibrar" onclick="aceptar()">SÍ</button>`;
 }
 
@@ -229,8 +230,8 @@ function aceptar(){
 }
 
 function finalRomantico(){
- document.body.style.background="linear-gradient(135deg,#0f2027,#203a43,#2c5364)";
- escribirFinal("TE AMO NAYELI 💛\nPara siempre 💍");
+ document.body.style.background="linear-gradient(135deg,#2b1055,#7597de,#f857a6)";
+ escribirFinal("Te amo mi niña linda 💖\nGracias a ti mis días se volvieron más alegres.\nTodo esto es por ti y para ti 💍");
  crearFuegos();
 }
 
@@ -252,7 +253,7 @@ function escribirFinal(txt){
 
  let c=document.createElement("div");
  c.className="corazon-grande";
- c.innerHTML="💖";
+ c.innerHTML="❤️";
  document.body.appendChild(c);
 }
 
@@ -271,10 +272,10 @@ function crearFuegos(){
 function crearCorazon(){
  let c=document.createElement("div");
  c.className="corazon";
- c.innerHTML="💛";
+ c.innerHTML="❤️";
  c.style.left=Math.random()*100+"vw";
  document.body.appendChild(c);
- setTimeout(()=>c.remove(),7000);
+ setTimeout(()=>c.remove(),9000);
 }
 
 function crearTeAmo(){
@@ -283,7 +284,7 @@ function crearTeAmo(){
  t.innerHTML="TE AMO";
  t.style.left=Math.random()*100+"vw";
  document.body.appendChild(t);
- setTimeout(()=>t.remove(),9000);
+ setTimeout(()=>t.remove(),10000);
 }
 </script>
 
