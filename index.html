@@ -12,64 +12,23 @@ body{
   display:flex;
   justify-content:center;
   align-items:center;
-  background:linear-gradient(135deg,#fceabb,#f8b500);
+  background:linear-gradient(135deg,#2a1a00,#000);
   font-family:Arial,sans-serif;
   overflow:hidden;
-  transition:background 2s;
 }
 
-body.final{
-  background:linear-gradient(135deg,#3a2c00,#000);
-}
-
-/* ⭐ estrellas */
-.estrella{
-  position:absolute;
-  color:#fff;
-  animation:caer 6s linear infinite;
-}
-@keyframes caer{
-  from{transform:translateY(-10vh);}
-  to{transform:translateY(110vh);opacity:0;}
-}
-
-/* 💌 tarjeta */
 .card{
-  background:rgba(255,255,255,.95);
+  background:rgba(30,30,30,.95);
   width:90%;
   max-width:520px;
-  max-height:85vh;
-  padding:25px 20px;
+  padding:25px;
   border-radius:20px;
-  box-shadow:0 20px 40px rgba(0,0,0,.15);
   text-align:center;
+  color:#fff;
   z-index:2;
-  overflow-y:auto;
 }
 
-h1{
-  color:#f8b500;
-  margin:10px 0;
-}
-
-.corazon{
-  font-size:1.8rem;
-  animation:latir 1.5s infinite;
-}
-@keyframes latir{
-  50%{transform:scale(1.15);}
-}
-
-.michi{
-  width:150px;
-  margin:15px auto;
-  display:block;
-}
-
-#texto{
-  color:#444;
-  line-height:1.6;
-}
+h1{color:#f8b500}
 
 button{
   margin-top:15px;
@@ -79,29 +38,14 @@ button{
   background:#f8b500;
   color:white;
   font-size:1rem;
-  cursor:pointer;
 }
 
-/* 💍 pregunta */
-#pregunta{
-  display:none;
-  margin-top:20px;
-}
+#sorpresa,#pregunta,#btnMusica{display:none}
 
-.firma{
-  margin-top:25px;
-  font-weight:bold;
-  color:#f8b500;
-  opacity:0;
-  transition:opacity 1s;
-}
-
-/* 💛 lluvia amor */
 .amor{
   position:fixed;
   bottom:-10%;
   animation:subir 6s linear forwards;
-  pointer-events:none;
 }
 @keyframes subir{
   to{transform:translateY(-120vh);opacity:0;}
@@ -111,64 +55,55 @@ button{
 
 <body>
 
-<!-- 🎵 músicas -->
-<audio id="musicaInicio" loop>
-  <source src="mi_corazon_encantado.mp3" type="audio/mpeg">
+<audio id="inicio" loop>
+  <source src="mi_corazon_encantado.mp3">
 </audio>
 
-<audio id="musicaFinal">
-  <source src="pensando_en_ti.mp3" type="audio/mpeg">
+<audio id="final">
+  <source src="pensando_en_ti.mp3">
 </audio>
 
 <div class="card">
-  <div class="corazon">💛</div>
-  <h1>Para Nayeli</h1>
-
-  <img src="michi.png" class="michi">
+  <h1>💛 Para Nayeli 💛</h1>
 
   <div id="texto"></div>
 
   <button onclick="iniciar()">▶ Leer mensaje</button>
+
+  <div id="sorpresa">
+    <h2>🎁 SORPRESA 🎁</h2>
+    <h3 id="conteo"></h3>
+  </div>
 
   <div id="pregunta">
     <h2>¿Quieres ser mi novia? 💍</h2>
     <button onclick="aceptar()">💛 Sí 💛</button>
   </div>
 
-  <button id="btnMusica" onclick="reproducirSoloMusica()" style="display:none;opacity:0;">
+  <button id="btnMusica" onclick="reproducirFinal()">
     🎶 Te la dedico mi amorcito
   </button>
-
-  <div class="firma" id="firma">
-    Con cariño,<br>tu niño Robin 💛
-  </div>
 </div>
 
 <script>
 const mensaje=[
-"Me encariñé contigo más rápido de lo que imaginé,",
-"porque llegaste cuando me sentía perdido.",
-"Me hiciste sentir que valía algo,",
-"y desde entonces te llevo en mi corazón."
+"Me encariñé contigo sin darme cuenta,",
+"llegaste cuando me sentía vacío,",
+"y me hiciste sentir importante.",
+"Desde entonces… te amo Nayeli 💛"
 ];
 
-let l=0,c=0,iniciado=false;
+let l=0,c=0;
 
 function iniciar(){
- if(iniciado)return;
- iniciado=true;
-
- const audio=document.getElementById("musicaInicio");
- audio.play().catch(()=>{});
-
+ document.getElementById("inicio").play();
  escribir();
 }
 
 function escribir(){
  if(l<mensaje.length){
   if(c<mensaje[l].length){
-   texto.innerHTML+=mensaje[l].charAt(c);
-   c++;
+   texto.innerHTML+=mensaje[l][c++];
    setTimeout(escribir,60);
   }else{
    texto.innerHTML+="<br>";
@@ -176,63 +111,48 @@ function escribir(){
    setTimeout(escribir,400);
   }
  }else{
-  document.getElementById("firma").style.opacity=1;
-  document.getElementById("pregunta").style.display="block";
+  setTimeout(mostrarSorpresa,2000);
  }
 }
 
+function mostrarSorpresa(){
+ document.getElementById("sorpresa").style.display="block";
+ let t=20;
+ const ctn=document.getElementById("conteo");
+ const intervalo=setInterval(()=>{
+  ctn.innerText=t;
+  t--;
+  if(t<0){
+   clearInterval(intervalo);
+   document.getElementById("sorpresa").style.display="none";
+   document.getElementById("pregunta").style.display="block";
+  }
+ },1000);
+}
+
 function aceptar(){
- document.getElementById("texto").innerHTML="";
  document.getElementById("pregunta").style.display="none";
- document.getElementById("firma").style.opacity=0;
-
- document.body.classList.add("final");
-
- const btn=document.getElementById("btnMusica");
- btn.style.display="block";
- setTimeout(()=>btn.style.opacity=1,100);
-
- iniciarLluviaAmor();
+ document.getElementById("btnMusica").style.display="block";
+ lluvia();
 }
 
-function reproducirSoloMusica(){
- const fin=document.getElementById("musicaFinal");
- const ini=document.getElementById("musicaInicio");
- ini.pause();ini.currentTime=0;
-
- fin.volume=0;
- fin.play();
-
- let v=0;
- const fade=setInterval(()=>{
-  if(v<1){v+=0.05;fin.volume=v;}
-  else clearInterval(fade);
- },200);
+function reproducirFinal(){
+ const i=document.getElementById("inicio");
+ const f=document.getElementById("final");
+ i.pause(); i.currentTime=0;
+ f.play();
 }
 
-function iniciarLluviaAmor(){
+function lluvia(){
  setInterval(()=>{
   const d=document.createElement("div");
   d.className="amor";
-  const msgs=["💛","❤️","💖","Te amo","Te amo Nayeli"];
-  d.innerText=msgs[Math.floor(Math.random()*msgs.length)];
+  d.innerText=["💛","❤️","Te amo","Te amo Nayeli"][Math.floor(Math.random()*4)];
   d.style.left=Math.random()*100+"vw";
-  d.style.fontSize=(Math.random()*20+15)+"px";
   document.body.appendChild(d);
   setTimeout(()=>d.remove(),6000);
  },400);
 }
-
-/* ⭐ estrellas */
-setInterval(()=>{
- const e=document.createElement("div");
- e.className="estrella";
- e.innerText="✨";
- e.style.left=Math.random()*100+"vw";
- e.style.fontSize=(Math.random()*10+10)+"px";
- document.body.appendChild(e);
- setTimeout(()=>e.remove(),6000);
-},600);
 </script>
 
 </body>
