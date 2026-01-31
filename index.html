@@ -6,7 +6,6 @@
 <title>Para Nayeli 💖</title>
 
 <style>
-/* ====== FONDO DÍA ====== */
 body{
   margin:0;
   height:100vh;
@@ -19,12 +18,12 @@ body{
   transition:background 2s;
 }
 
-/* ====== MODO NOCHE ====== */
+/* 🌙 MODO NOCHE */
 body.noche{
   background:linear-gradient(135deg,#2b1055,#41295a,#1f1c2c);
 }
 
-/* ====== CARD ====== */
+/* CARD */
 .card{
   background:#fffdf6;
   width:90%;
@@ -39,7 +38,7 @@ body.noche{
 h1{color:#d63384}
 #texto{color:#444;line-height:1.6}
 
-/* ====== BOTONES ====== */
+/* BOTONES */
 button{
   margin-top:15px;
   padding:12px 22px;
@@ -51,43 +50,43 @@ button{
   cursor:pointer;
 }
 
-/* BOTÓN SÍ TIEMBLA */
+/* BOTÓN SÍ VIBRA */
 .vibrar{animation:vibrar .4s infinite}
 @keyframes vibrar{
   0%{transform:translateX(0)}
-  25%{transform:translateX(-4px)}
-  50%{transform:translateX(4px)}
-  75%{transform:translateX(-4px)}
+  25%{transform:translateX(-6px)}
+  50%{transform:translateX(6px)}
+  75%{transform:translateX(-6px)}
   100%{transform:translateX(0)}
 }
 
-/* ====== CORAZONES ====== */
-.corazon{
+/* ✨ EMOJIS FLOTANDO */
+.flotante{
   position:fixed;
-  bottom:-30px;
+  bottom:-40px;
   font-size:18px;
-  animation:flotar 7s linear infinite;
-  opacity:.85;
+  animation:subir 8s linear infinite;
+  opacity:.9;
 }
-@keyframes flotar{
+@keyframes subir{
   from{transform:translateY(0)}
-  to{transform:translateY(-120vh)}
+  to{transform:translateY(-140vh)}
 }
 
-/* ====== TE AMO ====== */
+/* TE AMO */
 .teamo{
   position:fixed;
-  bottom:-30px;
+  bottom:-40px;
   color:#ff2d55;
   font-size:14px;
-  animation:flotarTexto 9s linear infinite;
+  animation:subirTexto 10s linear infinite;
 }
-@keyframes flotarTexto{
+@keyframes subirTexto{
   from{transform:translateY(0)}
-  to{transform:translateY(-130vh)}
+  to{transform:translateY(-150vh)}
 }
 
-/* ====== CONTADOR ====== */
+/* CONTADOR */
 #contador{
   font-size:3rem;
   color:#d63384;
@@ -95,13 +94,13 @@ button{
 }
 @keyframes temblar{
   0%{transform:translateX(0)}
-  25%{transform:translateX(-5px)}
-  50%{transform:translateX(5px)}
-  75%{transform:translateX(-5px)}
+  25%{transform:translateX(-6px)}
+  50%{transform:translateX(6px)}
+  75%{transform:translateX(-6px)}
   100%{transform:translateX(0)}
 }
 
-/* ====== FINAL ====== */
+/* FINAL */
 .amo-central{
   position:fixed;
   top:28%;
@@ -111,13 +110,12 @@ button{
   z-index:10;
   color:white;
   font-size:1.8rem;
-  text-shadow:0 0 14px #ffb6ff;
+  text-shadow:0 0 16px #ffb6ff;
 }
-
 .brillo{animation:brillar 2s infinite}
 @keyframes brillar{
   0%{text-shadow:0 0 10px #fff}
-  50%{text-shadow:0 0 30px #ff9}
+  50%{text-shadow:0 0 35px #ff9}
   100%{text-shadow:0 0 10px #fff}
 }
 
@@ -146,13 +144,18 @@ button{
 }
 @keyframes latir{
   0%{transform:translate(-50%,-50%) scale(1)}
-  50%{transform:translate(-50%,-50%) scale(1.25)}
+  50%{transform:translate(-50%,-50%) scale(1.3)}
   100%{transform:translate(-50%,-50%) scale(1)}
 }
 </style>
 </head>
 
 <body>
+
+<!-- 🎵 AUDIO FINAL -->
+<audio id="musicaFinal">
+  <source src="pensando_en_ti.mp3" type="audio/mpeg">
+</audio>
 
 <div class="card" id="card">
   <h1>Para Nayeli 💖</h1>
@@ -161,13 +164,13 @@ button{
 </div>
 
 <script>
-/* ====== MODO NOCHE AUTOMÁTICO ====== */
-const hora = new Date().getHours();
-if(hora >= 19 || hora < 6){
+/* 🌙 MODO NOCHE AUTOMÁTICO */
+const hora=new Date().getHours();
+if(hora>=19||hora<6){
   document.body.classList.add("noche");
 }
 
-/* ====== TEXTO ====== */
+/* TEXTO */
 const mensaje=[
 "Me encariñé tan rápido contigo porque fuiste la única persona",
 "que me hizo sentir que yo valía algo.",
@@ -186,17 +189,17 @@ const mensaje=[
 
 let l=0,c=0,iniciado=false;
 
-/* ====== INICIO ====== */
+/* INICIO */
 function iniciar(){
  if(iniciado) return;
  iniciado=true;
  btn.style.display="none";
  escribir();
- setInterval(crearCorazon,700);
- setInterval(crearTeAmo,1000);
+ setInterval(crearEmoji,600);
+ setInterval(crearTeAmo,1200);
 }
 
-/* ====== ESCRIBIR TEXTO ====== */
+/* ESCRIBIR */
 function escribir(){
  if(l<mensaje.length){
   if(c<mensaje[l].length){
@@ -212,27 +215,24 @@ function escribir(){
  }
 }
 
-/* ====== CONTEO ====== */
+/* CONTEO */
 function conteo(){
  texto.innerHTML=`<div>✨ Sorpresa ✨</div><div id="contador">20</div>`;
  let t=20;
  let i=setInterval(()=>{
   t--;
   contador.textContent=t;
-  if(t===0){
-    clearInterval(i);
-    preguntar();
-  }
+  if(t===0){clearInterval(i);preguntar();}
  },1000);
 }
 
-/* ====== PREGUNTA ====== */
+/* PREGUNTA */
 function preguntar(){
  texto.innerHTML=`<h2>¿Quieres ser mi novia? 💖</h2>
  <button class="vibrar" onclick="aceptar()">SÍ</button>`;
 }
 
-/* ====== FINAL ====== */
+/* FINAL */
 function aceptar(){
  card.remove();
  document.body.classList.add("noche");
@@ -243,6 +243,7 @@ function finalRomantico(){
  escribirFinal("TE AMO MI NIÑA LINDA 💖\nGracias a ti mis días son más alegres\nTodo esto es por ti");
 }
 
+/* TEXTO FINAL + MÚSICA */
 function escribirFinal(txt){
  let d=document.createElement("div");
  d.className="amo-central brillo";
@@ -264,25 +265,35 @@ function escribirFinal(txt){
  c.className="corazon-grande";
  c.innerHTML="❤️";
  document.body.appendChild(c);
+
+ let btnMusica=document.createElement("button");
+ btnMusica.innerHTML="🎵 Te la dedico mi amorcito";
+ btnMusica.style.marginTop="25px";
+ btnMusica.onclick=()=>document.getElementById("musicaFinal").play();
+ document.body.appendChild(btnMusica);
 }
 
-/* ====== EFECTOS ====== */
-function crearCorazon(){
- let c=document.createElement("div");
- c.className="corazon";
- c.innerHTML="❤️";
- c.style.left=Math.random()*100+"vw";
- document.body.appendChild(c);
- setTimeout(()=>c.remove(),7000);
+/* 💖 EMOJIS RANDOM */
+const emojis=["❤️","💖","💘","💕","💗","💛","💜","✨","⭐","🌟","💫"];
+
+function crearEmoji(){
+ let e=document.createElement("div");
+ e.className="flotante";
+ e.innerHTML=emojis[Math.floor(Math.random()*emojis.length)];
+ e.style.left=Math.random()*100+"vw";
+ e.style.fontSize=(Math.random()*12+14)+"px";
+ document.body.appendChild(e);
+ setTimeout(()=>e.remove(),8000);
 }
 
+/* TE AMO */
 function crearTeAmo(){
  let t=document.createElement("div");
  t.className="teamo";
  t.innerHTML="TE AMO";
  t.style.left=Math.random()*100+"vw";
  document.body.appendChild(t);
- setTimeout(()=>t.remove(),9000);
+ setTimeout(()=>t.remove(),10000);
 }
 </script>
 
