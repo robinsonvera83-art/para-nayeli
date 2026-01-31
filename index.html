@@ -18,7 +18,6 @@ body{
   transition:background 2s;
 }
 
-/* 🌙 MODO NOCHE */
 body.noche{
   background:linear-gradient(135deg,#2b1055,#41295a,#1f1c2c);
 }
@@ -49,7 +48,6 @@ button{
   cursor:pointer;
 }
 
-/* BOTÓN SÍ */
 .vibrar{animation:vibrar .4s infinite}
 @keyframes vibrar{
   0%{transform:translateX(0)}
@@ -60,24 +58,22 @@ button{
 }
 
 /* EMOJIS */
-.flotante{
+.flotante,.teamo{
   position:fixed;
   bottom:-40px;
-  animation:subir 8s linear infinite;
   z-index:1;
 }
+
+.flotante{animation:subir 8s linear infinite}
+.teamo{
+  animation:subirTexto 10s linear infinite;
+  color:#ff2d55;
+  font-size:14px;
+}
+
 @keyframes subir{
   from{transform:translateY(0)}
   to{transform:translateY(-140vh)}
-}
-
-.teamo{
-  position:fixed;
-  bottom:-40px;
-  color:#ff2d55;
-  font-size:14px;
-  animation:subirTexto 10s linear infinite;
-  z-index:1;
 }
 @keyframes subirTexto{
   from{transform:translateY(0)}
@@ -98,7 +94,7 @@ button{
   100%{transform:translateX(0)}
 }
 
-/* TEXTO FINAL */
+/* FINAL */
 .amo-central{
   position:fixed;
   top:25%;
@@ -111,29 +107,9 @@ button{
   z-index:10;
 }
 
-.brillo{animation:brillar 2s infinite}
-@keyframes brillar{
-  0%{text-shadow:0 0 10px #fff}
-  50%{text-shadow:0 0 35px #ff9}
-  100%{text-shadow:0 0 10px #fff}
-}
-
-/* BOTÓN CANCIÓN FINAL */
-.boton-cancion{
-  position:fixed;
-  top:62%;
-  left:50%;
-  transform:translateX(-50%);
-  background:#ff2d55;
-  font-size:1.1rem;
-  box-shadow:0 0 20px rgba(255,45,85,.7);
-  z-index:20;
-}
-
-/* CORAZÓN GRANDE */
 .corazon-grande{
   position:fixed;
-  top:48%;
+  top:50%;
   left:50%;
   transform:translate(-50%,-50%);
   font-size:90px;
@@ -145,12 +121,23 @@ button{
   50%{transform:translate(-50%,-50%) scale(1.3)}
   100%{transform:translate(-50%,-50%) scale(1)}
 }
+
+/* BOTÓN CANCIÓN */
+.boton-cancion{
+  position:fixed;
+  top:65%;
+  left:50%;
+  transform:translateX(-50%);
+  background:#ff2d55;
+  font-size:1.1rem;
+  box-shadow:0 0 20px rgba(255,45,85,.7);
+  z-index:20;
+}
 </style>
 </head>
 
 <body>
 
-<!-- 🎵 AUDIOS -->
 <audio id="musicaInicio" loop>
   <source src="mi_corazon_encantado.mp3" type="audio/mpeg">
 </audio>
@@ -169,17 +156,16 @@ button{
 const mensaje=[
 "Me encariñé tan rápido contigo porque fuiste la única persona",
 "que me hizo sentir que yo valía algo.",
-"",
-"Eres lo más valioso que tengo.",
-"Eres perfecta para mí.",
-"",
-"TE AMO CON TODO MI SER ❤️"
+"Llegaste cuando más perdido estaba",
+"y me devolviste la sonrisa.",
+"Por eso te llevo en el corazón.",
+"TE AMO CON TODO MI SER 💖"
 ];
 
 let l=0,c=0;
 
 function iniciar(){
- document.getElementById("musicaInicio").play();
+ musicaInicio.play();
  escribir();
  setInterval(crearEmoji,600);
  setInterval(crearTeAmo,1200);
@@ -196,17 +182,34 @@ function escribir(){
    setTimeout(escribir,500);
   }
  }else{
-  setTimeout(finalRomantico,4000);
+  setTimeout(sorpresa,4000);
  }
 }
 
-function finalRomantico(){
+function sorpresa(){
+ texto.innerHTML=`✨ Sorpresa ✨<br><div id="contador">20</div>`;
+ let t=20;
+ let i=setInterval(()=>{
+  t--;contador.textContent=t;
+  if(t===0){clearInterval(i);preguntar();}
+ },1000);
+}
+
+function preguntar(){
+ texto.innerHTML=`<h2>¿Quieres ser mi novia? 💖</h2>
+ <button class="vibrar" onclick="aceptar()">SÍ</button>`;
+}
+
+function aceptar(){
  card.remove();
  document.body.classList.add("noche");
+ mostrarFinal();
+}
 
+function mostrarFinal(){
  let d=document.createElement("div");
- d.className="amo-central brillo";
- d.innerHTML="TE AMO MI NIÑA LINDA 💖<br>Gracias por existir";
+ d.className="amo-central";
+ d.innerHTML="TE AMO MI NIÑA LINDA 💖<br>Gracias a ti mis días son más alegres<br>Todo esto es por ti";
  document.body.appendChild(d);
 
  let cor=document.createElement("div");
@@ -218,10 +221,10 @@ function finalRomantico(){
  btn.className="boton-cancion";
  btn.innerHTML="💖 Te la dedico amorcito 💖";
  btn.onclick=()=>{
-   musicaInicio.pause();
-   musicaFinal.play();
-   btn.innerHTML="🎶 Sonando para ti 💖";
-   btn.disabled=true;
+  musicaInicio.pause();
+  musicaFinal.play();
+  btn.innerHTML="🎶 Sonando para ti 💖";
+  btn.disabled=true;
  };
  document.body.appendChild(btn);
 }
@@ -233,7 +236,6 @@ function crearEmoji(){
  e.className="flotante";
  e.innerHTML=emojis[Math.floor(Math.random()*emojis.length)];
  e.style.left=Math.random()*100+"vw";
- e.style.fontSize=(Math.random()*14+16)+"px";
  document.body.appendChild(e);
  setTimeout(()=>e.remove(),8000);
 }
