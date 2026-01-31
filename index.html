@@ -8,27 +8,30 @@
 <style>
 body{
   margin:0;
-  min-height:100vh;
+  height:100vh;
+  overflow:hidden;
   display:flex;
   justify-content:center;
   align-items:center;
-  background:linear-gradient(135deg,#2a1a00,#000);
+  background:linear-gradient(135deg,#fceabb,#f8b500);
   font-family:Arial,sans-serif;
-  overflow:hidden;
+  transition:background 2s;
 }
 
+/* CARD */
 .card{
-  background:rgba(30,30,30,.95);
+  background:#fffdf6;
   width:90%;
-  max-width:520px;
+  max-width:500px;
   padding:25px;
   border-radius:20px;
   text-align:center;
-  color:#fff;
-  z-index:2;
+  box-shadow:0 20px 40px rgba(0,0,0,.2);
+  z-index:5;
 }
 
 h1{color:#f8b500}
+#texto{color:#444;line-height:1.6}
 
 button{
   margin-top:15px;
@@ -38,120 +41,249 @@ button{
   background:#f8b500;
   color:white;
   font-size:1rem;
+  cursor:pointer;
 }
 
-#sorpresa,#pregunta,#btnMusica{display:none}
+/* BOTÓN SÍ VIBRA */
+.vibrar{
+  animation:vibrar .4s infinite;
+}
+@keyframes vibrar{
+  0%{transform:translateX(0)}
+  25%{transform:translateX(-2px)}
+  50%{transform:translateX(2px)}
+  75%{transform:translateX(-2px)}
+  100%{transform:translateX(0)}
+}
 
-.amor{
+/* CORAZONES */
+.corazon{
   position:fixed;
-  bottom:-10%;
-  animation:subir 6s linear forwards;
+  font-size:18px;
+  animation:flotar 7s linear infinite;
+  opacity:.8;
 }
-@keyframes subir{
-  to{transform:translateY(-120vh);opacity:0;}
+@keyframes flotar{
+  from{transform:translateY(110vh)}
+  to{transform:translateY(-40vh)}
+}
+
+/* TE AMO */
+.teamo{
+  position:fixed;
+  color:#ff5fa2;
+  font-size:14px;
+  animation:flotarTexto 9s linear infinite;
+}
+@keyframes flotarTexto{
+  from{transform:translateY(120vh)}
+  to{transform:translateY(-50vh)}
+}
+
+/* CONTADOR */
+#contador{
+  font-size:3rem;
+  color:#f8b500;
+  animation:temblar .4s infinite;
+}
+@keyframes temblar{
+  0%{transform:translateX(0)}
+  25%{transform:translateX(-3px)}
+  50%{transform:translateX(3px)}
+  75%{transform:translateX(-3px)}
+  100%{transform:translateX(0)}
+}
+
+/* FINAL */
+.amo-central{
+  position:fixed;
+  top:30%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  text-align:center;
+  z-index:10;
+  color:white;
+  font-size:1.8rem;
+  text-shadow:0 0 12px #ffb6ff;
+}
+
+/* BRILLO */
+.brillo{
+  animation:brillar 2s infinite;
+}
+@keyframes brillar{
+  0%{text-shadow:0 0 10px #fff}
+  50%{text-shadow:0 0 25px #ff9}
+  100%{text-shadow:0 0 10px #fff}
+}
+
+/* ANILLO */
+.anillo{
+  position:fixed;
+  top:38%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  font-size:60px;
+  animation:giro 3s linear infinite;
+}
+@keyframes giro{
+  from{transform:translate(-50%,-50%) rotate(0)}
+  to{transform:translate(-50%,-50%) rotate(360deg)}
+}
+
+/* CORAZÓN GRANDE */
+.corazon-grande{
+  position:fixed;
+  top:55%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  font-size:90px;
+  animation:latir 2s infinite;
+}
+@keyframes latir{
+  0%{transform:translate(-50%,-50%) scale(1)}
+  50%{transform:translate(-50%,-50%) scale(1.2)}
+  100%{transform:translate(-50%,-50%) scale(1)}
+}
+
+/* FUEGOS */
+.fuego{
+  position:fixed;
+  font-size:25px;
+  animation:explota 2s ease-out forwards;
+}
+@keyframes explota{
+  0%{transform:scale(0)}
+  50%{transform:scale(1.5)}
+  100%{transform:scale(0);opacity:0}
 }
 </style>
 </head>
 
 <body>
 
-<audio id="inicio" loop>
-  <source src="mi_corazon_encantado.mp3">
+<audio id="musica" preload="auto" loop>
+  <source src="mi_corazon_encantado.mp3" type="audio/mpeg">
 </audio>
 
-<audio id="final">
-  <source src="pensando_en_ti.mp3">
-</audio>
-
-<div class="card">
-  <h1>💛 Para Nayeli 💛</h1>
-
+<div class="card" id="card">
+  <h1>Para Nayeli 💛</h1>
   <div id="texto"></div>
-
-  <button onclick="iniciar()">▶ Leer mensaje</button>
-
-  <div id="sorpresa">
-    <h2>🎁 SORPRESA 🎁</h2>
-    <h3 id="conteo"></h3>
-  </div>
-
-  <div id="pregunta">
-    <h2>¿Quieres ser mi novia? 💍</h2>
-    <button onclick="aceptar()">💛 Sí 💛</button>
-  </div>
-
-  <button id="btnMusica" onclick="reproducirFinal()">
-    🎶 Te la dedico mi amorcito
-  </button>
+  <button id="btn" onclick="iniciar()">▶ Leer mensaje</button>
 </div>
 
 <script>
 const mensaje=[
-"Me encariñé contigo sin darme cuenta,",
-"llegaste cuando me sentía vacío,",
-"y me hiciste sentir importante.",
-"Desde entonces… te amo Nayeli 💛"
+"Me encariñé tan rápido contigo porque fuiste la única persona",
+"que me hizo sentir que yo valía algo.",
+"Llegaste cuando más perdido estaba",
+"y me devolviste la sonrisa.",
+"Por eso te llevo en el corazón.",
+"TE AMO CON TODO MI SER 💖"
 ];
 
-let l=0,c=0;
+let l=0,c=0,iniciado=false;
 
 function iniciar(){
- document.getElementById("inicio").play();
+ if(iniciado) return;
+ iniciado=true;
+ musica.play();
+ btn.style.display="none";
  escribir();
+ setInterval(crearCorazon,700);
+ setInterval(crearTeAmo,1000);
 }
 
 function escribir(){
  if(l<mensaje.length){
   if(c<mensaje[l].length){
    texto.innerHTML+=mensaje[l][c++];
-   setTimeout(escribir,60);
+   setTimeout(escribir,55);
   }else{
    texto.innerHTML+="<br>";
    l++;c=0;
-   setTimeout(escribir,400);
+   setTimeout(escribir,350);
   }
  }else{
-  setTimeout(mostrarSorpresa,2000);
+  setTimeout(conteo,5000);
  }
 }
 
-function mostrarSorpresa(){
- document.getElementById("sorpresa").style.display="block";
+function conteo(){
+ texto.innerHTML=`<div>✨ Sorpresa ✨</div><div id="contador">20</div>`;
  let t=20;
- const ctn=document.getElementById("conteo");
- const intervalo=setInterval(()=>{
-  ctn.innerText=t;
-  t--;
-  if(t<0){
-   clearInterval(intervalo);
-   document.getElementById("sorpresa").style.display="none";
-   document.getElementById("pregunta").style.display="block";
-  }
+ let i=setInterval(()=>{
+  t--;contador.textContent=t;
+  if(t===0){clearInterval(i);preguntar();}
  },1000);
 }
 
+function preguntar(){
+ texto.innerHTML=`<h2>¿Quieres ser mi novia? 💛</h2>
+ <button class="vibrar" onclick="aceptar()">SÍ</button>`;
+}
+
 function aceptar(){
- document.getElementById("pregunta").style.display="none";
- document.getElementById("btnMusica").style.display="block";
- lluvia();
+ card.remove();
+ finalRomantico();
 }
 
-function reproducirFinal(){
- const i=document.getElementById("inicio");
- const f=document.getElementById("final");
- i.pause(); i.currentTime=0;
- f.play();
+function finalRomantico(){
+ document.body.style.background="linear-gradient(135deg,#0f2027,#203a43,#2c5364)";
+ escribirFinal("TE AMO NAYELI 💛\nPara siempre 💍");
+ crearFuegos();
 }
 
-function lluvia(){
+function escribirFinal(txt){
+ let d=document.createElement("div");
+ d.className="amo-central brillo";
+ document.body.appendChild(d);
+ let i=0;
+ let inter=setInterval(()=>{
+  d.innerHTML+=txt[i]==="\n"?"<br>":txt[i];
+  i++;
+  if(i>=txt.length)clearInterval(inter);
+ },80);
+
+ let a=document.createElement("div");
+ a.className="anillo";
+ a.innerHTML="💍";
+ document.body.appendChild(a);
+
+ let c=document.createElement("div");
+ c.className="corazon-grande";
+ c.innerHTML="💖";
+ document.body.appendChild(c);
+}
+
+function crearFuegos(){
  setInterval(()=>{
-  const d=document.createElement("div");
-  d.className="amor";
-  d.innerText=["💛","❤️","Te amo","Te amo Nayeli"][Math.floor(Math.random()*4)];
-  d.style.left=Math.random()*100+"vw";
-  document.body.appendChild(d);
-  setTimeout(()=>d.remove(),6000);
+  let f=document.createElement("div");
+  f.className="fuego";
+  f.innerHTML="🎆";
+  f.style.left=Math.random()*100+"vw";
+  f.style.top=Math.random()*60+"vh";
+  document.body.appendChild(f);
+  setTimeout(()=>f.remove(),2000);
  },400);
+}
+
+function crearCorazon(){
+ let c=document.createElement("div");
+ c.className="corazon";
+ c.innerHTML="💛";
+ c.style.left=Math.random()*100+"vw";
+ document.body.appendChild(c);
+ setTimeout(()=>c.remove(),7000);
+}
+
+function crearTeAmo(){
+ let t=document.createElement("div");
+ t.className="teamo";
+ t.innerHTML="TE AMO";
+ t.style.left=Math.random()*100+"vw";
+ document.body.appendChild(t);
+ setTimeout(()=>t.remove(),9000);
 }
 </script>
 
