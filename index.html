@@ -38,7 +38,6 @@ body.noche{
 h1{color:#d63384}
 #texto{color:#444;line-height:1.6}
 
-/* BOTONES */
 button{
   margin-top:15px;
   padding:12px 22px;
@@ -50,7 +49,7 @@ button{
   cursor:pointer;
 }
 
-/* BOTÓN SÍ VIBRA */
+/* BOTÓN SÍ */
 .vibrar{animation:vibrar .4s infinite}
 @keyframes vibrar{
   0%{transform:translateX(0)}
@@ -60,20 +59,17 @@ button{
   100%{transform:translateX(0)}
 }
 
-/* ✨ EMOJIS FLOTANDO */
+/* EMOJIS */
 .flotante{
   position:fixed;
   bottom:-40px;
-  font-size:18px;
   animation:subir 8s linear infinite;
-  opacity:.9;
 }
 @keyframes subir{
   from{transform:translateY(0)}
   to{transform:translateY(-140vh)}
 }
 
-/* TE AMO */
 .teamo{
   position:fixed;
   bottom:-40px;
@@ -107,11 +103,11 @@ button{
   left:50%;
   transform:translate(-50%,-50%);
   text-align:center;
-  z-index:10;
   color:white;
   font-size:1.8rem;
   text-shadow:0 0 16px #ffb6ff;
 }
+
 .brillo{animation:brillar 2s infinite}
 @keyframes brillar{
   0%{text-shadow:0 0 10px #fff}
@@ -119,7 +115,6 @@ button{
   100%{text-shadow:0 0 10px #fff}
 }
 
-/* ANILLO */
 .anillo{
   position:fixed;
   top:38%;
@@ -133,7 +128,6 @@ button{
   to{transform:translate(-50%,-50%) rotate(360deg)}
 }
 
-/* CORAZÓN GRANDE */
 .corazon-grande{
   position:fixed;
   top:56%;
@@ -152,7 +146,11 @@ button{
 
 <body>
 
-<!-- 🎵 AUDIO FINAL -->
+<!-- 🎵 AUDIOS -->
+<audio id="musicaInicio" loop>
+  <source src="mi_corazon_encantado.mp3" type="audio/mpeg">
+</audio>
+
 <audio id="musicaFinal">
   <source src="pensando_en_ti.mp3" type="audio/mpeg">
 </audio>
@@ -164,7 +162,7 @@ button{
 </div>
 
 <script>
-/* 🌙 MODO NOCHE AUTOMÁTICO */
+/* 🌙 MODO NOCHE */
 const hora=new Date().getHours();
 if(hora>=19||hora<6){
   document.body.classList.add("noche");
@@ -176,8 +174,8 @@ const mensaje=[
 "que me hizo sentir que yo valía algo.",
 "",
 "Solo quiero que sepas que eres lo suficientemente buena para estar conmigo.",
-"Eres lo más valioso que tengo, una chica linda tal como eres,",
-"y no necesitas cambiar absolutamente nada.",
+"Eres lo más valioso que tengo y una chica linda tal como eres.",
+"No necesitas cambiar nada.",
 "",
 "Eres perfecta para mí y mereces cosas muy bonitas.",
 "Poder estar contigo me hizo sentir amado",
@@ -189,17 +187,18 @@ const mensaje=[
 
 let l=0,c=0,iniciado=false;
 
-/* INICIO */
 function iniciar(){
  if(iniciado) return;
  iniciado=true;
  btn.style.display="none";
+
+ document.getElementById("musicaInicio").play();
+
  escribir();
  setInterval(crearEmoji,600);
  setInterval(crearTeAmo,1200);
 }
 
-/* ESCRIBIR */
 function escribir(){
  if(l<mensaje.length){
   if(c<mensaje[l].length){
@@ -215,10 +214,9 @@ function escribir(){
  }
 }
 
-/* CONTEO */
 function conteo(){
- texto.innerHTML=`<div>✨ Sorpresa ✨</div><div id="contador">20</div>`;
- let t=20;
+ texto.innerHTML=`<div>✨ Sorpresa ✨</div><div id="contador">15</div>`;
+ let t=15;
  let i=setInterval(()=>{
   t--;
   contador.textContent=t;
@@ -226,24 +224,23 @@ function conteo(){
  },1000);
 }
 
-/* PREGUNTA */
 function preguntar(){
  texto.innerHTML=`<h2>¿Quieres ser mi novia? 💖</h2>
  <button class="vibrar" onclick="aceptar()">SÍ</button>`;
 }
 
-/* FINAL */
 function aceptar(){
+ document.getElementById("musicaInicio").pause();
+ document.getElementById("musicaFinal").play();
  card.remove();
  document.body.classList.add("noche");
  finalRomantico();
 }
 
 function finalRomantico(){
- escribirFinal("TE AMO MI NIÑA LINDA 💖\nGracias a ti mis días son más alegres\nTodo esto es por ti");
+ escribirFinal("TE AMO MI NIÑA LINDA 💖\nGracias por existir\nEsto es solo el comienzo");
 }
 
-/* TEXTO FINAL + MÚSICA */
 function escribirFinal(txt){
  let d=document.createElement("div");
  d.className="amo-central brillo";
@@ -265,28 +262,20 @@ function escribirFinal(txt){
  c.className="corazon-grande";
  c.innerHTML="❤️";
  document.body.appendChild(c);
-
- let btnMusica=document.createElement("button");
- btnMusica.innerHTML="🎵 Te la dedico mi amorcito";
- btnMusica.style.marginTop="25px";
- btnMusica.onclick=()=>document.getElementById("musicaFinal").play();
- document.body.appendChild(btnMusica);
 }
 
-/* 💖 EMOJIS RANDOM */
-const emojis=["❤️","💖","💘","💕","💗","💛","💜","✨","⭐","🌟","💫"];
+const emojis=["❤️","💖","💘","💕","💗","✨","⭐","🌟","💫"];
 
 function crearEmoji(){
  let e=document.createElement("div");
  e.className="flotante";
  e.innerHTML=emojis[Math.floor(Math.random()*emojis.length)];
  e.style.left=Math.random()*100+"vw";
- e.style.fontSize=(Math.random()*12+14)+"px";
+ e.style.fontSize=(Math.random()*14+16)+"px";
  document.body.appendChild(e);
  setTimeout(()=>e.remove(),8000);
 }
 
-/* TE AMO */
 function crearTeAmo(){
  let t=document.createElement("div");
  t.className="teamo";
