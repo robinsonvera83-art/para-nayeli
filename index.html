@@ -59,11 +59,12 @@ button{
   100%{transform:translateX(0)}
 }
 
-/* EMOJIS FLOTANTES */
+/* EMOJIS */
 .flotante{
   position:fixed;
   bottom:-40px;
   animation:subir 8s linear infinite;
+  z-index:1;
 }
 @keyframes subir{
   from{transform:translateY(0)}
@@ -76,6 +77,7 @@ button{
   color:#ff2d55;
   font-size:14px;
   animation:subirTexto 10s linear infinite;
+  z-index:1;
 }
 @keyframes subirTexto{
   from{transform:translateY(0)}
@@ -96,16 +98,17 @@ button{
   100%{transform:translateX(0)}
 }
 
-/* FINAL */
+/* TEXTO FINAL */
 .amo-central{
   position:fixed;
-  top:26%;
+  top:25%;
   left:50%;
   transform:translate(-50%,-50%);
   text-align:center;
   color:white;
   font-size:1.8rem;
   text-shadow:0 0 16px #ffb6ff;
+  z-index:10;
 }
 
 .brillo{animation:brillar 2s infinite}
@@ -115,39 +118,32 @@ button{
   100%{text-shadow:0 0 10px #fff}
 }
 
-.anillo{
+/* BOTÓN CANCIÓN FINAL */
+.boton-cancion{
   position:fixed;
-  top:36%;
+  top:62%;
   left:50%;
-  transform:translate(-50%,-50%);
-  font-size:60px;
-  animation:giro 3s linear infinite;
-}
-@keyframes giro{
-  from{transform:translate(-50%,-50%) rotate(0)}
-  to{transform:translate(-50%,-50%) rotate(360deg)}
+  transform:translateX(-50%);
+  background:#ff2d55;
+  font-size:1.1rem;
+  box-shadow:0 0 20px rgba(255,45,85,.7);
+  z-index:20;
 }
 
+/* CORAZÓN GRANDE */
 .corazon-grande{
   position:fixed;
-  top:56%;
+  top:48%;
   left:50%;
   transform:translate(-50%,-50%);
   font-size:90px;
   animation:latir 2s infinite;
+  z-index:9;
 }
 @keyframes latir{
   0%{transform:translate(-50%,-50%) scale(1)}
   50%{transform:translate(-50%,-50%) scale(1.3)}
   100%{transform:translate(-50%,-50%) scale(1)}
-}
-
-/* BOTÓN CANCIÓN */
-.boton-cancion{
-  margin-top:20px;
-  background:#ff2d55;
-  font-size:1.1rem;
-  box-shadow:0 0 20px rgba(255,45,85,.6);
 }
 </style>
 </head>
@@ -166,40 +162,24 @@ button{
 <div class="card" id="card">
   <h1>Para Nayeli 💖</h1>
   <div id="texto"></div>
-  <button id="btn" onclick="iniciar()">▶ Leer mensaje</button>
+  <button onclick="iniciar()">▶ Leer mensaje</button>
 </div>
 
 <script>
-/* 🌙 MODO NOCHE */
-const hora=new Date().getHours();
-if(hora>=19||hora<6){
-  document.body.classList.add("noche");
-}
-
-/* TEXTO */
 const mensaje=[
 "Me encariñé tan rápido contigo porque fuiste la única persona",
 "que me hizo sentir que yo valía algo.",
 "",
-"Solo quiero que sepas que eres lo suficientemente buena para estar conmigo.",
-"Eres lo más valioso que tengo y una chica linda tal como eres.",
-"No necesitas cambiar nada.",
+"Eres lo más valioso que tengo.",
+"Eres perfecta para mí.",
 "",
-"Eres perfecta para mí y mereces cosas muy bonitas.",
-"Poder estar contigo me hizo sentir amado",
-"en un mundo donde por mucho tiempo me sentí tan solo.",
-"",
-"Gracias por llegar a mi vida.",
 "TE AMO CON TODO MI SER ❤️"
 ];
 
-let l=0,c=0,iniciado=false;
+let l=0,c=0;
 
 function iniciar(){
- if(iniciado) return;
- iniciado=true;
- btn.style.display="none";
- musicaInicio.play();
+ document.getElementById("musicaInicio").play();
  escribir();
  setInterval(crearEmoji,600);
  setInterval(crearTeAmo,1200);
@@ -213,71 +193,37 @@ function escribir(){
   }else{
    texto.innerHTML+="<br>";
    l++;c=0;
-   setTimeout(escribir,600);
+   setTimeout(escribir,500);
   }
  }else{
-  setTimeout(conteo,6000);
+  setTimeout(finalRomantico,4000);
  }
 }
 
-function conteo(){
- texto.innerHTML=`<div>✨ Sorpresa ✨</div><div id="contador">20</div>`;
- let t=20;
- let i=setInterval(()=>{
-  t--;contador.textContent=t;
-  if(t===0){clearInterval(i);preguntar();}
- },1000);
-}
-
-function preguntar(){
- texto.innerHTML=`<h2>¿Quieres ser mi novia? 💖</h2>
- <button class="vibrar" onclick="aceptar()">SÍ</button>`;
-}
-
-function aceptar(){
+function finalRomantico(){
  card.remove();
  document.body.classList.add("noche");
- finalRomantico();
-}
 
-function finalRomantico(){
- escribirFinal("TE AMO MI NIÑA LINDA 💖\nGracias por existir\nEsto es solo el comienzo");
-}
-
-function escribirFinal(txt){
  let d=document.createElement("div");
  d.className="amo-central brillo";
+ d.innerHTML="TE AMO MI NIÑA LINDA 💖<br>Gracias por existir";
  document.body.appendChild(d);
 
- let i=0;
- let inter=setInterval(()=>{
-  d.innerHTML+=txt[i]==="\n"?"<br>":txt[i];
-  i++;
-  if(i>=txt.length)clearInterval(inter);
- },80);
+ let cor=document.createElement("div");
+ cor.className="corazon-grande";
+ cor.innerHTML="❤️";
+ document.body.appendChild(cor);
 
- let a=document.createElement("div");
- a.className="anillo";
- a.innerHTML="💍";
- document.body.appendChild(a);
-
- let c=document.createElement("div");
- c.className="corazon-grande";
- c.innerHTML="❤️";
- document.body.appendChild(c);
-
- /* BOTÓN CANCIÓN */
- let b=document.createElement("button");
- b.className="boton-cancion";
- b.innerHTML="💖 Te la dedico amorcito 💖";
- b.onclick=()=>{
+ let btn=document.createElement("button");
+ btn.className="boton-cancion";
+ btn.innerHTML="💖 Te la dedico amorcito 💖";
+ btn.onclick=()=>{
    musicaInicio.pause();
    musicaFinal.play();
-   b.disabled=true;
-   b.innerHTML="🎶 Sonando para ti 💖";
+   btn.innerHTML="🎶 Sonando para ti 💖";
+   btn.disabled=true;
  };
- d.appendChild(document.createElement("br"));
- d.appendChild(b);
+ document.body.appendChild(btn);
 }
 
 const emojis=["❤️","💖","💘","💕","💗","✨","⭐","🌟","💫"];
